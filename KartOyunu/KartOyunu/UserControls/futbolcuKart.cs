@@ -31,6 +31,6 @@ namespace KartOyunu.UserControls
             lblPenalti.Text = futbolcuKart.getPenalti().ToString(); // Futbolcu penaltısını getter ile çekip label'a yazdırıyoruz
             lblSerbestVurus.Text = futbolcuKart.getSerbestVurus().ToString(); // Futbolcu serbest vuruşunu getter ile çekip label'a yazdırıyoruz
             lblKarsiKarsiya.Text = futbolcuKart.getKaleciKarsiKarsiya().ToString(); // Futbolcu kaleciyle karşı karşıya özelliğini getter ile çekip label'a yazdırıyoruz
-        }
+        }        
     }
 }

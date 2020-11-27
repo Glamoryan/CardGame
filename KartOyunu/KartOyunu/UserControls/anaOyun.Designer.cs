@@ -42,6 +42,7 @@
             this.lblOzellik = new System.Windows.Forms.Label();
             this.lblTurBaslik = new System.Windows.Forms.Label();
             this.lblTur = new System.Windows.Forms.Label();
+            this.btnGec = new System.Windows.Forms.Button();
             this.grbHamle.SuspendLayout();
             this.grbKullaniciKartlari.SuspendLayout();
             this.SuspendLayout();
@@ -184,10 +185,22 @@
             this.lblTur.TabIndex = 0;
             this.lblTur.Text = "1";
             // 
+            // btnGec
+            // 
+            this.btnGec.Location = new System.Drawing.Point(638, 173);
+            this.btnGec.Name = "btnGec";
+            this.btnGec.Size = new System.Drawing.Size(99, 52);
+            this.btnGec.TabIndex = 5;
+            this.btnGec.Text = "Berabere Turunu Geç";
+            this.btnGec.UseVisualStyleBackColor = true;
+            this.btnGec.Visible = false;
+            this.btnGec.Click += new System.EventHandler(this.btnGec_Click);
+            // 
             // anaOyun
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnGec);
             this.Controls.Add(this.lblOzellik);
             this.Controls.Add(this.lblTurBaslik);
             this.Controls.Add(this.lblOzellikBaslik);
@@ -225,5 +238,6 @@
         public System.Windows.Forms.Panel pnlKullaniciKart;
         private System.Windows.Forms.Label lblTurBaslik;
         private System.Windows.Forms.Label lblTur;
+        private System.Windows.Forms.Button btnGec;
     }
 }

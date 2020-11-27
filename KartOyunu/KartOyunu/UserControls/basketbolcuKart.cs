@@ -30,6 +30,6 @@ namespace KartOyunu.UserControls
             lblIkilik.Text = basketbolcuKart.getIkilik().ToString(); // Basketçi ikiliğini getter ile çekip label'a yazdırıyoruz
             lblUcluk.Text = basketbolcuKart.getUcluk().ToString(); // Basketçi üçlüğünü getter ile çekip label'a yazdırıyoruz
             lblSerbestAtis.Text = basketbolcuKart.getSerbestAtis().ToString(); // Basketçi serbest atışını getter ile çekip label'a yazdırıyoruz
-        }
+        }       
     }
 }

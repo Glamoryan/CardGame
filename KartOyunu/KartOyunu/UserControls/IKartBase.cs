@@ -7,6 +7,6 @@ using System.Threading.Tasks;
 namespace KartOyunu.UserControls
 {
     public interface IKartBase
-    {
+    {        
     }
 }
