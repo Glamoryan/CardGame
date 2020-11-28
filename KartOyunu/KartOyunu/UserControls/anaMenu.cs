@@ -36,7 +36,7 @@ namespace KartOyunu.UserControls
             {
                 PanelHelper.panelTemizle(anaPanel); // AnaPaneli temizleyen method
                 _anaOyun = new anaOyun(); // anaOyunun yeni instance'ını oluşturup değişkene atıyoruz
-                anaPanel.Controls.Add(_anaOyun); // AnaPanel'e oluşturduğumuz anaOyun UserControl'ünü ekliyoruz
+                anaPanel.Controls.Add(_anaOyun); // AnaPanel'e oluşturduğumuz anaOyun UserControl'ünü ekliyoruz                
             }
         }
         // --- Events (Olaylar) Start -----------------------------

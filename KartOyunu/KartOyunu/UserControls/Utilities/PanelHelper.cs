@@ -5,6 +5,8 @@ namespace KartOyunu.UserControls.Utilities
 {    
     public static class PanelHelper // Panellerimizi kontrol etmemize yardımcı olan static class
     {
+        public static Panel mainPanel { get; set; }
+
         private static string isaret = "?"; // Bilgisayarın oynadığı kartı gizlemek için koyacağımız işaret
        
         public static void panelTemizle(Panel panel) // Verilen panelin içeriğini temizleyen method

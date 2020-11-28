@@ -12,6 +12,7 @@ namespace KartOyunu.UserControls
         public Test test; // Test class'ımızın instance'ını tutacak değişken
         public string suankiTur = "Futbolcu"; // Tur durumunu tutacak değişken (İstenilen turda başlanabilir => Futbolcu veya Basketbolcu)
         public int turSayisi = 1; // Tur sayısını tutacak değişken
+        public int berabereSayisi = 0; // Beraberlik sayısını tutan değişken
 
         public Sporcu _bilgisayarOynananSporcu; // O anki turda bilgisayarın oynadığı sporcuyu tutacak değişken 
         public Sporcu _kullaniciOynananSporcu; // O anki turda kullanıcının oynadığı sporcuyu tutacak değişken
@@ -80,6 +81,13 @@ namespace KartOyunu.UserControls
 
                 kullaniciKartGerial(); // Tur berabere bittiği için kullanıcı kartını geri alan methodu çağırıyoruz
                 bilgisayarKartGerial(); // Tur berabere bittiği için bilgisayar kartını geri alan methodu çağırıyoruz
+                berabereSayisi++; // Berabere sayısını 1 arttırıyoruz
+
+                if(berabereSayisi >= 3) // Eğer 3 kez veya üstü beraberlik olmuşssa bu block çalışır
+                {
+                    btnBitir.Visible = true; // Oyunu bitrime butonunun görünürlüğünü açarız
+                    lblBilgi2.Visible = true; // Bilgi label'ımızın görünürlüğünü açarız
+                }
             }
             bilgisayarKartiSil(); // Tur bittikten sonra bilgisayarın oynadığı kartı destesinden silmek için bu methodu çağırıyoruz
             kullaniciKartiSil();
@@ -403,17 +411,42 @@ namespace KartOyunu.UserControls
             return secilenOzellik; // Seçilen özelliği geri döndürüyoruz
         }
 
+        public bool oyunBittiMi() // Oyunun bitip bitmediğini kontrol eden method
+        {
+            if (test._kullanici.kartListesi.Count == 0 && test._bilgisayar.kartListesi.Count == 0) // Eğer iki oyuncunun elindede kart kalmadıysa bu block çalışır
+            {
+                Oyuncu oyunuKazanan = test.oyunuBitir(); // Test class'ındaki oyunu bitir methodundan dönen oyuncuyu değişkene aktarıyoruz
+                if (oyunuKazanan != null) // Eğer kazanan oyuncu boş değilse bu block çalışır
+                {                    
+                    MessageBox.Show(oyunuKazanan.getOyuncuAdi() + " oyuncusu oyunu " + oyunuKazanan.getSkor() + " skoru ile bitirdi");// Ekrana oyuncunun adını ve skorunu yazdırırız
+                    return true; // Geriye true döndürürüz, yani oyun bitti
+                }
+                else // Eğer kazanan oyuncu boş dönmüşse bu block çalışır (Berabere bittiyse)
+                {
+                    MessageBox.Show("Oyun berabere bitti"); // Ekrana oyun berabere bitti yazdırırız
+                    return true; // Geriye true döndürürüz, yani oyun bitti
+                }
+            }
+            return false;// Eğer oyuncuların elinde kart varsa geriye false döndürürüz, yani oyun bitmedi
+        }
+
         public void sonrakiTuraGec() // Sonraki tura geçmemizi sağlayan method
-        {            
-            suankiTur = test.turSecici(suankiTur);// Tur secici ile sonraki turu seçiyoruz ve property'mize atıyoruz
-            turSayisi += 1; // Tur sayısını 1 arttırıyoruz            
+        {
+            if (oyunBittiMi()) // Eğer oyunBittiMi() methodundan true döndüyse yani oyun bittiyse bu block çalışır
+            {
+                Dispose(); //AnaOyun controlünün içindeki tüm elemanları sileriz
+                PanelHelper.panelTemizle(PanelHelper.mainPanel); // Ana formumuzda bulunan mainPanelin içini temizleriz
+                PanelHelper.mainPanel.Controls.Add(new anaMenu()); // mainPanelin içine yeni bir anaMenu instance'ı oluşturup ekleriz
+            }
+            else // Eğer oyunBittiMi() methodundan false döndüyse yani oyun bitmediyse bu block çalışır
+            {
+                suankiTur = test.turSecici(suankiTur);// Tur secici ile sonraki turu seçiyoruz ve property'mize atıyoruz
+                turSayisi += 1; // Tur sayısını 1 arttırıyoruz            
 
-            InitGame(); // Oyunu yeni tura uygun yeniden set etmesi için bu methodu çağırıyoruz 
+                InitGame(); // Oyunu yeni tura uygun yeniden set etmesi için bu methodu çağırıyoruz            
 
-            kartlariGetir(); // Kullanıcının kartlarını çekip ekrana yazdıran methodu çağırıyoruz
-            desteyiKontrolEt(); // Tur durumuna göre (Basketbolcu veya futbolcu) kartları kilityen methodu çağırıyoruz
-
-            turSayisiniYazdir(); // Tur sayısını ekrana yazdırması için bu methodu çağırıyoruz
+                turSayisiniYazdir(); // Tur sayısını ekrana yazdırması için bu methodu çağırıyoruz
+            }            
         }
         // --- Arkaplan Methodları End --------------------------------------------------------------------------------------------------------------------------------------
 
@@ -432,6 +465,19 @@ namespace KartOyunu.UserControls
         private void btnGec_Click(object sender, EventArgs e) // Sonraki tura geç butonuna tıklandığında çalışacak event
         {
             sonrakiTuraGec(); // Sonraki tura geçmek için bu methodu çağırıyoruz
+        }
+
+        private void btnBitir_Click(object sender, EventArgs e) // Çıkmaz durumunda oyunu bitiren butonun eventi
+        {
+            Oyuncu oyunuKazanan = test.oyunuBitir(); // Test class'ımızdaki oyunuBitir() methodunu çağırıp kazananı değişkene atarız
+            if (oyunuKazanan != null) // Eğer kazanan boş gelmemişse bu block çalışır
+            {
+                MessageBox.Show(oyunuKazanan.getOyuncuAdi() + " oyuncusu oyunu " + oyunuKazanan.getSkor() + " skoru ile bitirdi");// Kazananı skor ve adı ile birlikte ekrana yazarız                
+            }
+            else // Eğer kazanan boş dönmüşse (Berabere bitmişse) bu block çalışır
+            {
+                MessageBox.Show("Oyun berabere bitti"); // Ekrana oyun berabere bitti yazdırırız                 
+            }
         }
         // --- Eventler (Olaylar) End -------------------------------------------------------------------------------------------------------------------------------------        
     }

@@ -43,6 +43,20 @@ namespace KartOyunu.Entites
             _bilgisayar.kartListesi = deste16[1];
         }
 
+        public Oyuncu oyunuBitir() // Oyunu bitirmemizi sağlayan method
+        {            
+            // Kullanıcı ve bilgisayarın skorlarını getter ile alıp değişkene atarız
+            int kullaniciSkor = _kullanici.getSkor();
+            int bilgisayarSkor = _bilgisayar.getSkor();
+
+            if (kullaniciSkor > bilgisayarSkor) // Eğer kullanıcının skoru bilgisayarınkinden fazlaysa bu block çalışır
+                return _kullanici; // Kazanan olarak kullanıcıyı döneriz
+            else if (kullaniciSkor < bilgisayarSkor) // Eğer kullanıcının skoru bilgisayarınkinden azsa bu block çalışır
+                return _bilgisayar; // Kazanan olarak bilgisayarı döneriz
+            else // Eğer skorlar eşitse bu block çalışır
+                return null; // Geriye boş değer döndürürüz
+        }
+
         public List<Sporcu> sporcuOlustur() // Sporcuları oluşturan method
         {
             List<Sporcu> sporcular = new List<Sporcu>();

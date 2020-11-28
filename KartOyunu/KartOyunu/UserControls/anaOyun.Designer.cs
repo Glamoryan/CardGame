@@ -44,6 +44,8 @@
             this.lblTur = new System.Windows.Forms.Label();
             this.btnGec = new System.Windows.Forms.Button();
             this.lblBilgi = new System.Windows.Forms.Label();
+            this.btnBitir = new System.Windows.Forms.Button();
+            this.lblBilgi2 = new System.Windows.Forms.Label();
             this.grbHamle.SuspendLayout();
             this.grbKullaniciKartlari.SuspendLayout();
             this.SuspendLayout();
@@ -207,10 +209,33 @@
             this.lblBilgi.Text = "(Eğer tek tür kart kalmışsa)";
             this.lblBilgi.Visible = false;
             // 
+            // btnBitir
+            // 
+            this.btnBitir.Location = new System.Drawing.Point(27, 173);
+            this.btnBitir.Name = "btnBitir";
+            this.btnBitir.Size = new System.Drawing.Size(100, 52);
+            this.btnBitir.TabIndex = 7;
+            this.btnBitir.Text = "Oyunu Bitir";
+            this.btnBitir.UseVisualStyleBackColor = true;
+            this.btnBitir.Visible = false;
+            this.btnBitir.Click += new System.EventHandler(this.btnBitir_Click);
+            // 
+            // lblBilgi2
+            // 
+            this.lblBilgi2.AutoSize = true;
+            this.lblBilgi2.Location = new System.Drawing.Point(15, 238);
+            this.lblBilgi2.Name = "lblBilgi2";
+            this.lblBilgi2.Size = new System.Drawing.Size(229, 13);
+            this.lblBilgi2.TabIndex = 6;
+            this.lblBilgi2.Text = "(3 Beraberlik, Eğer özellikler aynıysa oyunu bitir)";
+            this.lblBilgi2.Visible = false;
+            // 
             // anaOyun
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnBitir);
+            this.Controls.Add(this.lblBilgi2);
             this.Controls.Add(this.lblBilgi);
             this.Controls.Add(this.btnGec);
             this.Controls.Add(this.lblOzellik);
@@ -252,5 +277,7 @@
         private System.Windows.Forms.Label lblTur;
         private System.Windows.Forms.Button btnGec;
         private System.Windows.Forms.Label lblBilgi;
+        private System.Windows.Forms.Button btnBitir;
+        private System.Windows.Forms.Label lblBilgi2;
     }
 }
