@@ -45,6 +45,6 @@
         }
 
         // Sporcu puanlarını dönen implement edilecek methodumuz
-        public abstract int sporcuPuaniGoster();
+        public abstract int sporcuPuaniGoster(string ozellik);
     }
 }

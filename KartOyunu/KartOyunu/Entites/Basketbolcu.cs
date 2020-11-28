@@ -68,9 +68,14 @@ namespace KartOyunu.Entites
             return kartKullanilmisMi;
         }
         
-        public override int sporcuPuaniGoster()
+        public override int sporcuPuaniGoster(string ozellik)
         {
-            throw new NotImplementedException();
+            if (ozellik == "ikilik")
+                return getIkilik();
+            else if (ozellik == "üçlük")
+                return getUcluk();
+            else
+                return getSerbestAtis();
         }
     }
 }

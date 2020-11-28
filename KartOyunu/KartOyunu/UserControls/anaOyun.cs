@@ -343,30 +343,42 @@ namespace KartOyunu.UserControls
 
                 if (ozellik == "penaltı") // Eğer bize verilen özellik penaltı ise bu block çalışır
                 {
-                    if (kullaniciKazanan.getPenalti() > bilgisayarKazanan.getPenalti())//Eğer kullanıcının kartındaki penaltı özelliği bilgisayarın kartındaki penaltı özelliğinden daha büyükse bu block çalışır
+                    // Kullanıcı ve Bilgisayarın futbolcu özellikleri sporcuPuaniGoster methodu ile set ediyoruz
+                    int kOzellikPuani = kullaniciKazanan.sporcuPuaniGoster(ozellik);
+                    int bOzellikPuani = bilgisayarKazanan.sporcuPuaniGoster(ozellik);
+
+                    if (kOzellikPuani > bOzellikPuani)//Eğer kullanıcının kartındaki penaltı özelliği bilgisayarın kartındaki penaltı özelliğinden daha büyükse bu block çalışır
                         return test._kullanici;// Kullanıcının kartının özelliği daha büyük olduğu için kazanan kullanıcı olur ve geri döndürürüz
-                    else if (kullaniciKazanan.getPenalti() < bilgisayarKazanan.getPenalti())//Eğer kullanıcının kartındaki penaltı özelliği bilgisayarın kartındaki penaltı özelliğinden daha küçükse bu block çalışır
+                    else if (kOzellikPuani < bOzellikPuani)//Eğer kullanıcının kartındaki penaltı özelliği bilgisayarın kartındaki penaltı özelliğinden daha küçükse bu block çalışır
                         return test._bilgisayar;// Kullanıcının kartının özelliği daha küçük olduğu için kazanan bilgisayar olur ve geri döndürürüz
                     else // Eğer özellikler eşit ise bu block çalışır
                         return null; // Kimse kazanamadığı için boş değer döndürürüz
                 }
                 else if (ozellik == "serbest vuruş")// Eğer bize verilen özellik serbest vuruş ise bu block çalışır
                 {
-                    if (kullaniciKazanan.getSerbestVurus() > bilgisayarKazanan.getSerbestVurus())//Eğer kullanıcının kartındaki serbest vuruş özelliği bilgisayarın kartındaki serbest vuruş özelliğinden daha büyükse bu block çalışır
+                    // Kullanıcı ve Bilgisayarın futbolcu özellikleri sporcuPuaniGoster methodu ile set ediyoruz
+                    int kOzellikPuani = kullaniciKazanan.sporcuPuaniGoster(ozellik);
+                    int bOzellikPuani = bilgisayarKazanan.sporcuPuaniGoster(ozellik);
+
+                    if (kOzellikPuani > bOzellikPuani)//Eğer kullanıcının kartındaki penaltı özelliği bilgisayarın kartındaki penaltı özelliğinden daha büyükse bu block çalışır
                         return test._kullanici;// Kullanıcının kartının özelliği daha büyük olduğu için kazanan kullanıcı olur ve geri döndürürüz
-                    else if (kullaniciKazanan.getSerbestVurus() < bilgisayarKazanan.getSerbestVurus())//Eğer kullanıcının kartındaki serbest vuruş özelliği bilgisayarın kartındaki serbest vuruş özelliğinden daha küçükse bu block çalışır
+                    else if (kOzellikPuani < bOzellikPuani)//Eğer kullanıcının kartındaki penaltı özelliği bilgisayarın kartındaki penaltı özelliğinden daha küçükse bu block çalışır
                         return test._bilgisayar;// Kullanıcının kartının özelliği daha küçük olduğu için kazanan bilgisayar olur ve geri döndürürüz
                     else // Eğer özellikler eşit ise bu block çalışır
-                        return null;// Kimse kazanamadığı için boş değer döndürürüz
+                        return null; // Kimse kazanamadığı için boş değer döndürürüz
                 }
                 else // Eğer bize verilen özellik kaleciyle karşı karşıyaysa bu block çalışır
                 {
-                    if (kullaniciKazanan.getKaleciKarsiKarsiya() > bilgisayarKazanan.getKaleciKarsiKarsiya())//Eğer kullanıcının kartındaki kaleciKarsiKarsiya özelliği bilgisayarın kartındaki kaleciKarsiKarsiya özelliğinden daha büyükse bu block çalışır
+                    // Kullanıcı ve Bilgisayarın futbolcu özellikleri sporcuPuaniGoster methodu ile set ediyoruz
+                    int kOzellikPuani = kullaniciKazanan.sporcuPuaniGoster(ozellik);
+                    int bOzellikPuani = bilgisayarKazanan.sporcuPuaniGoster(ozellik);
+
+                    if (kOzellikPuani > bOzellikPuani)//Eğer kullanıcının kartındaki penaltı özelliği bilgisayarın kartındaki penaltı özelliğinden daha büyükse bu block çalışır
                         return test._kullanici;// Kullanıcının kartının özelliği daha büyük olduğu için kazanan kullanıcı olur ve geri döndürürüz
-                    else if (kullaniciKazanan.getKaleciKarsiKarsiya() < bilgisayarKazanan.getKaleciKarsiKarsiya())//Eğer kullanıcının kartındaki kaleciKarsiKarsiya özelliği bilgisayarın kartındaki kaleciKarsiKarsiya özelliğinden daha küçükse bu block çalışır
+                    else if (kOzellikPuani < bOzellikPuani)//Eğer kullanıcının kartındaki penaltı özelliği bilgisayarın kartındaki penaltı özelliğinden daha küçükse bu block çalışır
                         return test._bilgisayar;// Kullanıcının kartının özelliği daha küçük olduğu için kazanan bilgisayar olur ve geri döndürürüz
                     else // Eğer özellikler eşit ise bu block çalışır
-                        return null;// Kimse kazanamadığı için boş değer döndürürüz
+                        return null; // Kimse kazanamadığı için boş değer döndürürüz
                 }
             }
             else // Eğer şuanki tur basketbolcu turuysa bu block çalışır
@@ -377,30 +389,42 @@ namespace KartOyunu.UserControls
 
                 if (ozellik == "ikilik")// Eğer bize verilen özellik ikilik ise bu block çalışır
                 {
-                    if (kullaniciKazanan.getIkilik() > bilgisayarKazanan.getIkilik())//Eğer kullanıcının kartındaki ikilik özelliği bilgisayarın kartındaki ikilik özelliğinden daha büyükse bu block çalışır
+                    // Kullanıcı ve Bilgisayarın futbolcu özellikleri sporcuPuaniGoster methodu ile set ediyoruz
+                    int kOzellikPuani = kullaniciKazanan.sporcuPuaniGoster(ozellik);
+                    int bOzellikPuani = bilgisayarKazanan.sporcuPuaniGoster(ozellik);
+
+                    if (kOzellikPuani > bOzellikPuani)//Eğer kullanıcının kartındaki penaltı özelliği bilgisayarın kartındaki penaltı özelliğinden daha büyükse bu block çalışır
                         return test._kullanici;// Kullanıcının kartının özelliği daha büyük olduğu için kazanan kullanıcı olur ve geri döndürürüz
-                    else if (kullaniciKazanan.getIkilik() < bilgisayarKazanan.getIkilik())//Eğer kullanıcının kartındaki ikilik özelliği bilgisayarın kartındaki ikilik özelliğinden daha küçükse bu block çalışır
+                    else if (kOzellikPuani < bOzellikPuani)//Eğer kullanıcının kartındaki penaltı özelliği bilgisayarın kartındaki penaltı özelliğinden daha küçükse bu block çalışır
                         return test._bilgisayar;// Kullanıcının kartının özelliği daha küçük olduğu için kazanan bilgisayar olur ve geri döndürürüz
-                    else// Eğer özellikler eşit ise bu block çalışır
-                        return null;// Kimse kazanamadığı için boş değer döndürürüz
+                    else // Eğer özellikler eşit ise bu block çalışır
+                        return null; // Kimse kazanamadığı için boş değer döndürürüz
                 }
                 else if (ozellik == "üçlük")// Eğer bize verilen özellik üçlük ise bu block çalışır
                 {
-                    if (kullaniciKazanan.getUcluk() > bilgisayarKazanan.getUcluk())//Eğer kullanıcının kartındaki üçlük özelliği bilgisayarın kartındaki üçlük özelliğinden daha büyükse bu block çalışır
+                    // Kullanıcı ve Bilgisayarın futbolcu özellikleri sporcuPuaniGoster methodu ile set ediyoruz
+                    int kOzellikPuani = kullaniciKazanan.sporcuPuaniGoster(ozellik);
+                    int bOzellikPuani = bilgisayarKazanan.sporcuPuaniGoster(ozellik);
+
+                    if (kOzellikPuani > bOzellikPuani)//Eğer kullanıcının kartındaki penaltı özelliği bilgisayarın kartındaki penaltı özelliğinden daha büyükse bu block çalışır
                         return test._kullanici;// Kullanıcının kartının özelliği daha büyük olduğu için kazanan kullanıcı olur ve geri döndürürüz
-                    else if (kullaniciKazanan.getUcluk() < bilgisayarKazanan.getUcluk())//Eğer kullanıcının kartındaki üçlük özelliği bilgisayarın kartındaki üçlük özelliğinden daha küçükse bu block çalışır
+                    else if (kOzellikPuani < bOzellikPuani)//Eğer kullanıcının kartındaki penaltı özelliği bilgisayarın kartındaki penaltı özelliğinden daha küçükse bu block çalışır
                         return test._bilgisayar;// Kullanıcının kartının özelliği daha küçük olduğu için kazanan bilgisayar olur ve geri döndürürüz
-                    else// Eğer özellikler eşit ise bu block çalışır
-                        return null;// Kimse kazanamadığı için boş değer döndürürüz
+                    else // Eğer özellikler eşit ise bu block çalışır
+                        return null; // Kimse kazanamadığı için boş değer döndürürüz
                 }
                 else
                 {
-                    if (kullaniciKazanan.getSerbestAtis() > bilgisayarKazanan.getSerbestAtis())//Eğer kullanıcının kartındaki serbest atış özelliği bilgisayarın kartındaki serbest atış özelliğinden daha büyükse bu block çalışır
+                    // Kullanıcı ve Bilgisayarın futbolcu özellikleri sporcuPuaniGoster methodu ile set ediyoruz
+                    int kOzellikPuani = kullaniciKazanan.sporcuPuaniGoster(ozellik);
+                    int bOzellikPuani = bilgisayarKazanan.sporcuPuaniGoster(ozellik);
+
+                    if (kOzellikPuani > bOzellikPuani)//Eğer kullanıcının kartındaki penaltı özelliği bilgisayarın kartındaki penaltı özelliğinden daha büyükse bu block çalışır
                         return test._kullanici;// Kullanıcının kartının özelliği daha büyük olduğu için kazanan kullanıcı olur ve geri döndürürüz
-                    else if (kullaniciKazanan.getSerbestAtis() < bilgisayarKazanan.getSerbestAtis())//Eğer kullanıcının kartındaki serbest atış özelliği bilgisayarın kartındaki serbest atış özelliğinden daha küçükse bu block çalışır
+                    else if (kOzellikPuani < bOzellikPuani)//Eğer kullanıcının kartındaki penaltı özelliği bilgisayarın kartındaki penaltı özelliğinden daha küçükse bu block çalışır
                         return test._bilgisayar;// Kullanıcının kartının özelliği daha küçük olduğu için kazanan bilgisayar olur ve geri döndürürüz
-                    else// Eğer özellikler eşit ise bu block çalışır
-                        return null;// Kimse kazanamadığı için boş değer döndürürüz
+                    else // Eğer özellikler eşit ise bu block çalışır
+                        return null; // Kimse kazanamadığı için boş değer döndürürüz
                 }
             }
         }
@@ -479,6 +503,9 @@ namespace KartOyunu.UserControls
             {
                 MessageBox.Show("Oyun berabere bitti"); // Ekrana oyun berabere bitti yazdırırız                 
             }
+            Dispose(); //AnaOyun controlünün içindeki tüm elemanları sileriz
+            PanelHelper.panelTemizle(PanelHelper.mainPanel); // Ana formumuzda bulunan mainPanelin içini temizleriz
+            PanelHelper.mainPanel.Controls.Add(new anaMenu()); // mainPanelin içine yeni bir anaMenu instance'ı oluşturup ekleriz
         }
         // --- Eventler (Olaylar) End -------------------------------------------------------------------------------------------------------------------------------------        
     }
