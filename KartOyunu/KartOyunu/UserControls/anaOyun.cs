@@ -65,12 +65,14 @@ namespace KartOyunu.UserControls
         {
             if (kazanan is Kullanici) // Eğer bize verilen kazanan kullanıcıysa bu block çalışır
             {
-                test.turuKazanan(kazanan as Kullanici); // Test class'ımızdaki turuKazanan() methodu ile kullanıcıyı gönderip, skorunu arttırıyoruz                
+                test.turuKazanan(kazanan as Kullanici); // Test class'ımızdaki turuKazanan() methodu ile kullanıcıyı gönderip, skorunu arttırıyoruz      
+                skorlariYazdir(); // Skorları ekrana yazdırıp güncelleyen methodu çağırıyoruz
                 MessageBox.Show(test._kullanici.getOyuncuAdi() + " turu kazandı !"); // Kazananın adını getter ile alıp ekrana çıkartıyoruz                   
             }
             else if (kazanan is Bilgisayar) // Eğer bize verilen kazanan bilgisayarsa bu block çalışır
             {
                 test.turuKazanan(kazanan as Bilgisayar); // Test class'ımızdaki turuKazanan() methodu ile bilgisayarı gönderip, skorunu arttırıyoruz
+                skorlariYazdir(); // Skorları ekrana yazdırıp güncelleyen methodu çağırıyoruz
                 MessageBox.Show(test._bilgisayar.getOyuncuAdi() + " turu kazandı !"); // Kazananın adını getter ile alıp ekrana çıkartıyoruz                                
             }
             else // Eğer kazananımız koysa bu block çalışır (kazananiBelirle() methodunda özellikleri aynı olup null döndürdüğümüz zaman)
@@ -90,8 +92,7 @@ namespace KartOyunu.UserControls
                 }
             }
             bilgisayarKartiSil(); // Tur bittikten sonra bilgisayarın oynadığı kartı destesinden silmek için bu methodu çağırıyoruz
-            kullaniciKartiSil();
-            skorlariYazdir(); // Skorları ekrana yazdırıp güncelleyen methodu çağırıyoruz
+            kullaniciKartiSil();            
             sonrakiTuraGec(); // Sonraki tura geçmemizi sağlana methodu çağırıyoruz
         }
 
