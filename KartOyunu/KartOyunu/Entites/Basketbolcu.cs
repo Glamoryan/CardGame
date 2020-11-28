@@ -68,14 +68,14 @@ namespace KartOyunu.Entites
             return kartKullanilmisMi;
         }
         
-        public override int sporcuPuaniGoster(string ozellik)
+        public override int sporcuPuaniGoster(string ozellik) // Basketbolcu için sporcu puanlarını döndüren method
         {
-            if (ozellik == "ikilik")
-                return getIkilik();
-            else if (ozellik == "üçlük")
-                return getUcluk();
-            else
-                return getSerbestAtis();
+            if (ozellik == "ikilik") // Eğer özellik ikilik ise bu block çalışır
+                return getIkilik(); // Getter ile ikilik ozelliğini geri döndürürüz
+            else if (ozellik == "üçlük") // Eğer özellik üçlük ise bu block çalışır
+                return getUcluk();// Getter ile üçlük ozelliğini geri döndürürüz
+            else // Eğer özellik serbest atış ise bu block çalışır
+                return getSerbestAtis(); // Getter ile serbest atış ozelliğini geri döndürürüz
         }
     }
 }

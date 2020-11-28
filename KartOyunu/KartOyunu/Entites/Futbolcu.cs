@@ -68,14 +68,14 @@ namespace KartOyunu.Entites
             return kartKullanilmisMi;
         }
        
-        public override int sporcuPuaniGoster(string ozellikIsmi)
+        public override int sporcuPuaniGoster(string ozellikIsmi) // Futbolcu için sporcu özelliklerini döndüren method
         {
-            if (ozellikIsmi == "penaltı")
-                return getPenalti();
-            else if (ozellikIsmi == "serbest vuruş")
-                return getSerbestVurus();
-            else
-                return getKaleciKarsiKarsiya();
+            if (ozellikIsmi == "penaltı") // Eğer özellik penaltı ise bu block çalışır
+                return getPenalti(); // Getter ile özelliği döneriz
+            else if (ozellikIsmi == "serbest vuruş") // Eğer özellik serbest vuruş ise bu block çalışır
+                return getSerbestVurus(); // Getter ile özelliği döneriz
+            else// Eğer özellik kalecikarsikarsiya ise bu block çalışır
+                return getKaleciKarsiKarsiya(); // Getter ile özelliği döneriz
         }
 
     }
