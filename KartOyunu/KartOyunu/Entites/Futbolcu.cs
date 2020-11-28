@@ -17,12 +17,13 @@ namespace KartOyunu.Entites
         }
 
         // Parametreli constructor
-        public Futbolcu(string futbolcuAdi,string futbolcuTakim,int penalti,int serbestVurus,int karsiKarsiya) : base (futbolcuAdi,futbolcuTakim) // Java'daki super() methodunun karşılığı base
+        public Futbolcu(string futbolcuAdi,string futbolcuTakim,int penalti,int serbestVurus,int karsiKarsiya,bool kullanilmisMi) : base (futbolcuAdi,futbolcuTakim) // Java'daki super() methodunun karşılığı base
         {
             // Setter'larımız ile özelliklerimizi set ettik
             setPenalti(penalti);
             setSerbestVurus(serbestVurus);
             setKaleciKarsiKarsiya(karsiKarsiya);
+            setKartKullanilmisMi(kullanilmisMi);
         }
 
         // Setter'larımız

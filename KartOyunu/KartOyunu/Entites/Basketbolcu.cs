@@ -17,12 +17,13 @@ namespace KartOyunu.Entites
         }
 
         // Parametreli constructor
-        public Basketbolcu(string basketbolcuAdi,string basketbolcuTakim,int ikilik,int ucluk,int serbestAtis): base (basketbolcuAdi,basketbolcuTakim) // Java'daki super() methodunun karşılığı base
+        public Basketbolcu(string basketbolcuAdi,string basketbolcuTakim,int ikilik,int ucluk,int serbestAtis,bool kullanilmisMi): base (basketbolcuAdi,basketbolcuTakim) // Java'daki super() methodunun karşılığı base
         {
             // Setter'larımızı çağırıp özelliklerimizi set ediyoruz
             setIkilik(ikilik);
             setUcluk(ucluk);
             setSerbestAtis(serbestAtis);
+            setKartKullanilmisMi(kullanilmisMi);
         }
 
         // Setter'larımız

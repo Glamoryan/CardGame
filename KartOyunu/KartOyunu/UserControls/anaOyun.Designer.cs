@@ -200,11 +200,12 @@
             // lblBilgi
             // 
             this.lblBilgi.AutoSize = true;
-            this.lblBilgi.Location = new System.Drawing.Point(629, 234);
+            this.lblBilgi.Location = new System.Drawing.Point(620, 238);
             this.lblBilgi.Name = "lblBilgi";
-            this.lblBilgi.Size = new System.Drawing.Size(117, 13);
+            this.lblBilgi.Size = new System.Drawing.Size(132, 13);
             this.lblBilgi.TabIndex = 6;
-            this.lblBilgi.Text = "(Eğer tek kart kalmışsa)";
+            this.lblBilgi.Text = "(Eğer tek tür kart kalmışsa)";
+            this.lblBilgi.Visible = false;
             // 
             // anaOyun
             // 

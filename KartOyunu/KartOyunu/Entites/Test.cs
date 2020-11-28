@@ -47,24 +47,24 @@ namespace KartOyunu.Entites
         {
             List<Sporcu> sporcular = new List<Sporcu>();
             // Futbolcu isimleri ve takımları constructor ile tanımlandı
-            sporcular.Add(new Futbolcu("Cristiano Ronaldo", "Juventus", 95, 80, 90));
-            sporcular.Add(new Futbolcu("Lionel Messi", "Barcelona", 100, 75, 90));
-            sporcular.Add(new Futbolcu("Neymar", "Paris Saint-Germain", 85, 80, 95));
-            sporcular.Add(new Futbolcu("Robert Lewandowski", "Bayern Munih", 80, 70, 75));
-            sporcular.Add(new Futbolcu("Zlatan Ibrahimovic", "Milan", 70, 75, 80));
-            sporcular.Add(new Futbolcu("Sergio Ramos", "Real Madrid", 85, 75, 70));
-            sporcular.Add(new Futbolcu("Luka Modric", "Real Madrid", 85, 85, 80));
-            sporcular.Add(new Futbolcu("Gareth Bale", "Tottenham", 90, 85, 90));
+            sporcular.Add(new Futbolcu("Cristiano Ronaldo", "Juventus", 95, 80, 90,false));
+            sporcular.Add(new Futbolcu("Lionel Messi", "Barcelona", 100, 75, 90, false));
+            sporcular.Add(new Futbolcu("Neymar", "Paris Saint-Germain", 85, 80, 95, false));
+            sporcular.Add(new Futbolcu("Robert Lewandowski", "Bayern Munih", 80, 70, 75, false));
+            sporcular.Add(new Futbolcu("Zlatan Ibrahimovic", "Milan", 70, 75, 80, false));
+            sporcular.Add(new Futbolcu("Sergio Ramos", "Real Madrid", 85, 75, 70, false));
+            sporcular.Add(new Futbolcu("Luka Modric", "Real Madrid", 85, 85, 80, false));
+            sporcular.Add(new Futbolcu("Gareth Bale", "Tottenham", 90, 85, 90, false));
 
             // Basketbolcu isimleri ve takımları constructor ile tanımlandı - Özellikleri ise settar'ları ile tanımlandı
-            sporcular.Add(new Basketbolcu("Lebron James", "Lakers", 85, 80, 95));
-            sporcular.Add(new Basketbolcu("Stephen Curry", "Goldent State", 85, 95, 90));
-            sporcular.Add(new Basketbolcu("James Harden", "Houston Rockets", 85, 75, 85));
-            sporcular.Add(new Basketbolcu("Kawhi Leonard", "Lakers", 85, 85, 85));
-            sporcular.Add(new Basketbolcu("Yannis Adetokunbo", "Milwaukee", 80, 85, 85));
-            sporcular.Add(new Basketbolcu("Chris Paul", "Oklahoma", 75, 70, 80));
-            sporcular.Add(new Basketbolcu("Anthony Davis", "Lakers", 85, 85, 90));
-            sporcular.Add(new Basketbolcu("Kyrie Irving", "Brooklyn", 90, 85, 89));
+            sporcular.Add(new Basketbolcu("Lebron James", "Lakers", 85, 80, 95, false));
+            sporcular.Add(new Basketbolcu("Stephen Curry", "Goldent State", 85, 95, 90, false));
+            sporcular.Add(new Basketbolcu("James Harden", "Houston Rockets", 85, 75, 85, false));
+            sporcular.Add(new Basketbolcu("Kawhi Leonard", "Lakers", 85, 85, 85, false));
+            sporcular.Add(new Basketbolcu("Yannis Adetokunbo", "Milwaukee", 80, 85, 85, false));
+            sporcular.Add(new Basketbolcu("Chris Paul", "Oklahoma", 75, 70, 80, false));
+            sporcular.Add(new Basketbolcu("Anthony Davis", "Lakers", 85, 85, 90, false));
+            sporcular.Add(new Basketbolcu("Kyrie Irving", "Brooklyn", 90, 85, 89, false));
 
             // Oluşturulan sporcu listesini geri döndürür
             return sporcular;

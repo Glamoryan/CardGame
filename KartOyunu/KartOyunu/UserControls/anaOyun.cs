@@ -1,6 +1,7 @@
 ﻿using KartOyunu.Entites;
 using KartOyunu.UserControls.Utilities;
 using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace KartOyunu.UserControls
@@ -16,9 +17,7 @@ namespace KartOyunu.UserControls
         public Sporcu _kullaniciOynananSporcu; // O anki turda kullanıcının oynadığı sporcuyu tutacak değişken
 
         public IKartBase _kullaniciOynananKart; // O anki turda kullanıcının oynadığı kartı tutacak değişken
-        public IKartBase _bilgisayarOynananKart; // O anki turda bilgisayarın oynadığı kartı tutacak değişken
-
-        public int kartPozisyonu = 0; // Oynanılan kartın destedeki pozisyonunu tutacak değişken
+        public IKartBase _bilgisayarOynananKart; // O anki turda bilgisayarın oynadığı kartı tutacak değişken        
 
         public Oyuncu kazanan; // O turu kazanan oyuncuyu tutacak değişken
         // --- Fields End ---
@@ -34,7 +33,7 @@ namespace KartOyunu.UserControls
             pnlKartlarim.AutoScroll = false;
             pnlKartlarim.VerticalScroll.Enabled = false;
             pnlKartlarim.VerticalScroll.Visible = false;
-            pnlKartlarim.VerticalScroll.Maximum = 0;
+            pnlKartlarim.VerticalScroll.Minimum = 0;            
             pnlKartlarim.AutoScroll = true;
         }
         // --- Constructors End ---
@@ -77,10 +76,13 @@ namespace KartOyunu.UserControls
             {
                 MessageBox.Show("Berabere"); // Ekrana berabere yazdırıyoruz    
                 btnGec.Visible = true; // Berabere biten turdan sonra tek kart kaldıysa o turu geçmek için "Geç" butonunu görünür yapıyoruz
+                lblBilgi.Visible = true; // Bilgi label'ının görünürlüğünü aktifleştiriyoruz
 
                 kullaniciKartGerial(); // Tur berabere bittiği için kullanıcı kartını geri alan methodu çağırıyoruz
                 bilgisayarKartGerial(); // Tur berabere bittiği için bilgisayar kartını geri alan methodu çağırıyoruz
             }
+            bilgisayarKartiSil(); // Tur bittikten sonra bilgisayarın oynadığı kartı destesinden silmek için bu methodu çağırıyoruz
+            kullaniciKartiSil();
             skorlariYazdir(); // Skorları ekrana yazdırıp güncelleyen methodu çağırıyoruz
             sonrakiTuraGec(); // Sonraki tura geçmemizi sağlana methodu çağırıyoruz
         }
@@ -102,7 +104,10 @@ namespace KartOyunu.UserControls
             
             PanelHelper.panelThumbnailYazdir(pnlBilgisayarKart);// Bilgisayar'ın kart oynadığı panele thumbnail'ımızı getiriyoruz
 
-            suankiTuruYazdir();// Hangi turda olduğumuzu ekrana yazdıran methodu çağırıyoruz
+            suankiTuruYazdir();// Hangi turda olduğumuzu ekrana yazdıran methodu çağırıyoruz 
+
+            kartlariGetir(); // Kullanıcının kartlarını çekip ekrana yazdıran methodu çağırıyoruz
+            desteyiKontrolEt(); // Tur durumuna göre (Basketbolcu veya futbolcu) kartları kilityen methodu çağırıyoruz
         }
 
         public void desteyiKontrolEt() // Tur sırasına göre kartları kilitleyip açan method
@@ -132,26 +137,34 @@ namespace KartOyunu.UserControls
         public void kartlariGetir() // Kullanıcının kartlarını getirip ekrana yazdıran method
         {
             int sayac = 0; // Kartların yerlerini kontrol etmek için bir sayaç tanımlıyoruz
-
+            PanelHelper.panelTemizle(pnlKartlarim); // Kartların geleceği paneli temizliyoruz
             foreach (Sporcu kart in test._kullanici.kartListesi) // Test class'ında, Kullanıcı class'ımızı tutan property'deki kartListesini foreach ile geziyoruz. (Bilgisayar kartListesini gezmiyoruz çünkü ekranda göstermeyeceğiz)
-            {
+            {                
                 if (kart is Basketbolcu) // Eğer gezdiğimiz kartın tipi Basketbolcuysa bu block çalışır
                 {
-                    // Gezdiğimiz kart basketbolcu olduğu için, basketbolcuKart UserControlünü oluşturuyoruz ve gezdiğimiz kartı(Sporcu tipindeki) Basketbolcu tipi olarak tanıtıp constructor'a veriyoruz
-                    basketbolcuKart basketbolcuKart = new basketbolcuKart(kart as Basketbolcu);
-                    basketbolcuKart.Left = (sayac * 190); // Burada kartlar iç içe geçmesin diye, kartların solundan sayac * 190 ekleyerek pozisyon veriyoruz. Sayacı 0'dan başlattığımız için ilk kart 0*190 = 0 olacağı için en sola gelir. Sonraki kartlar sayaç arttığı için sağa doğru kayar
-                    basketbolcuKart.btnSec.Click += delegate (object s, EventArgs args) { kullaniciKartOyna(kart, basketbolcuKart); };
-                    pnlKartlarim.Controls.Add(basketbolcuKart);// Kartlar panelimize oluşturduğumuz basketbolcuKartını ekliyoruz.
-                    sayac++; // Sonraki kartlar için aynı pozisyonda iç içe geçmesinler diye sayacı 1 arttırıyoruz
+                    Basketbolcu kartim = kart as Basketbolcu; // Gezdiğimiz kartı basketbolcu olarak tanıtıp değişkene atıyoruz
+                    if (!kartim.getKartKullanilmisMi()) // Eğer kartımız kullanılmamışsa bu block çalışır
+                    {
+                        // Gezdiğimiz kart basketbolcu olduğu için, basketbolcuKart UserControlünü oluşturuyoruz ve gezdiğimiz kartı(Sporcu tipindeki) Basketbolcu tipi olarak tanıtıp constructor'a veriyoruz
+                        basketbolcuKart basketbolcuKart = new basketbolcuKart(kart as Basketbolcu);
+                        basketbolcuKart.Left = (sayac * 190); // Burada kartlar iç içe geçmesin diye, kartların solundan sayac * 190 ekleyerek pozisyon veriyoruz. Sayacı 0'dan başlattığımız için ilk kart 0*190 = 0 olacağı için en sola gelir. Sonraki kartlar sayaç arttığı için sağa doğru kayar
+                        basketbolcuKart.btnSec.Click += delegate (object s, EventArgs args) { kullaniciKartOyna(kart, basketbolcuKart); }; // Kartımızın butonuna kullaniciKartOyna methodunu ekliyoruz
+                        pnlKartlarim.Controls.Add(basketbolcuKart);// Kartlar panelimize oluşturduğumuz basketbolcuKartını ekliyoruz.
+                        sayac++; // Sonraki kartlar için aynı pozisyonda iç içe geçmesinler diye sayacı 1 arttırıyoruz
+                    }                    
                 }
                 else // Eğer gezdiğimiz kart Futbolcu tipindeyse bu block çalışır
                 {
-                    // Gezdiğimiz kart futbolcu olduğu için, futbolcuKart UserControlünü oluşturuyoruz ve gezdiğimiz kartı(Sporcu tipindeki) Futbolcu tipi olarak tanıtıp constructor'a veriyoruz
-                    futbolcuKart futbolcuKart = new futbolcuKart(kart as Futbolcu);
-                    futbolcuKart.Left = (sayac * 190);// Burada kartlar iç içe geçmesin diye, kartların solundan sayac * 190 ekleyerek pozisyon veriyoruz. Sayacı 0'dan başlattığımız için ilk kart 0*190 = 0 olacağı için en sola gelir. Sonraki kartlar sayaç arttığı için sağa doğru kayar
-                    futbolcuKart.btnSec.Click += delegate (object s, EventArgs args) { kullaniciKartOyna(kart, futbolcuKart); };
-                    pnlKartlarim.Controls.Add(futbolcuKart);// Kartlar panelimize oluşturduğumuz basketbolcuKartını ekliyoruz.
-                    sayac++;// Sonraki kartlar için aynı pozisyonda iç içe geçmesinler diye sayacı 1 arttırıyoruz
+                    Futbolcu kartim = kart as Futbolcu; // Gezdiğimiz kartı futbolcu olarak tanıtıp değişkene atıyoruz
+                    if (!kartim.getKartKullanilmisMi()) // Eğer kartımız kullanılmamışsa bu block çalışır
+                    {
+                        // Gezdiğimiz kart futbolcu olduğu için, futbolcuKart UserControlünü oluşturuyoruz ve gezdiğimiz kartı(Sporcu tipindeki) Futbolcu tipi olarak tanıtıp constructor'a veriyoruz
+                        futbolcuKart futbolcuKart = new futbolcuKart(kart as Futbolcu);
+                        futbolcuKart.Left = (sayac * 190);// Burada kartlar iç içe geçmesin diye, kartların solundan sayac * 190 ekleyerek pozisyon veriyoruz. Sayacı 0'dan başlattığımız için ilk kart 0*190 = 0 olacağı için en sola gelir. Sonraki kartlar sayaç arttığı için sağa doğru kayar
+                        futbolcuKart.btnSec.Click += delegate (object s, EventArgs args) { kullaniciKartOyna(kart, futbolcuKart); }; // Kartımızın butonuna kullaniciKartOyna methodunu ekliyoruz
+                        pnlKartlarim.Controls.Add(futbolcuKart);// Kartlar panelimize oluşturduğumuz basketbolcuKartını ekliyoruz.
+                        sayac++;// Sonraki kartlar için aynı pozisyonda iç içe geçmesinler diye sayacı 1 arttırıyoruz
+                    }                    
                 }
             }
         }
@@ -196,23 +209,21 @@ namespace KartOyunu.UserControls
 
             PanelHelper.panelTemizle(pnlKullaniciKart); // Kullanıcının kartını oynadığı paneli temizliyoruz
             if (_kullaniciOynananSporcu is Basketbolcu && kartTuru is basketbolcuKart) //Eğer kartımız basketbolcuysa ve kartTürümüz basketbolcu kartıysa bu block çalışır
-            {
+            {                
                 pnlKullaniciKart.Controls.Add(bKart); // Kullanıcının kart oynadığı panele kartımızı ekliyoruz
                 bKart.Left = 0; // BasketbolcuKartımızı yeniden oluşturmadığımız için önceki kartımızdan kalan Left değerini 0'lıyoruz. (Kullanıcı kartınının oynandığı panele tam otursun diye)
                 bKart.btnSec.Visible = false; // Oynanılan kart tekrar seçilmesin diye seç butonunu gizliyoruz
-                _kullaniciOynananKart = bKart; // Oynanan kartı başka bir yerde kullanmak için property'mize set ediyoruz
-                kartPozisyonu = bKart.Left; // Kartın left değerini başka bir yerde kullanmak için property'mize set ediyoruz
+                _kullaniciOynananKart = bKart; // Oynanan kartı başka bir yerde kullanmak için property'mize set ediyoruz                
 
                 Basketbolcu koyulanKart = _kullaniciOynananSporcu as Basketbolcu; // Oynanılan kartı (Sporcu) basketbolcu olarak tanıtıp değişkene atıyoruz (Özelliklerine erişmek için)
                 koyulanKart.setKartKullanilmisMi(true); // Oynanılan kartın kartKullanilmisMi özelliğini setter ile true'ya set ediyoruz
             }
             else if (_kullaniciOynananSporcu is Futbolcu && kartTuru is futbolcuKart) // Eğer kartımız futbolcuysa ve kartTürümüz futbolcu kartıysa bu block çalışır
-            {
+            {                
                 pnlKullaniciKart.Controls.Add(fKart);// Kullanıcının kart oynadığı panele kartımızı ekliyoruz
                 fKart.Left = 0;// FutbolcuKartımızı yeniden oluşturmadığımız için önceki kartımızdan kalan Left değerini 0'lıyoruz. (Kullanıcı kartınının oynandığı yere tam otursun diye)
                 fKart.btnSec.Visible = false; // Oynanılan kart tekrar seçilmesin diye seç butonunu gizliyoruz
-                _kullaniciOynananKart = fKart; // Oynanan kartı başka bir yerde kullanmak için property'mize set ediyoruz
-                kartPozisyonu = fKart.Left; // Kartın left değerini başka bir yerde kullanmak için property'mize set ediyoruz
+                _kullaniciOynananKart = fKart; // Oynanan kartı başka bir yerde kullanmak için property'mize set ediyoruz                
 
                 Futbolcu koyulanKart = _kullaniciOynananSporcu as Futbolcu; // Oynanılan kartı (Sporcu) futbolcu olarak tanıtıp değişkene atıyoruz (Özelliklerine erişmek için)
                 koyulanKart.setKartKullanilmisMi(true); // Oynanılan kartın kartKullanilmisMi özelliğini setter ile true'ya set ediyoruz
@@ -265,33 +276,23 @@ namespace KartOyunu.UserControls
             }
         }
 
-        public void kullaniciKartGerial()  //Düzeltilecek, geri alınan kartlar iç içe geçiyor
-        {
-            if (_kullaniciOynananKart is futbolcuKart)
+        public void kullaniciKartGerial()  // Kullanıcının berabere biten tur sonunda kartını geri almasını sağlayan method
+        {            
+            if (_kullaniciOynananKart is futbolcuKart) // Önceden set ettiğimiz property'deki kartımız futbolcuKart'ı ise bu method çalışır
             {
-                futbolcuKart kullanilmisKart = _kullaniciOynananKart as futbolcuKart;
-                Futbolcu kullanilmisSporcu = _kullaniciOynananSporcu as Futbolcu;
+                Futbolcu kullanilmisSporcu = _kullaniciOynananSporcu as Futbolcu; // Önceden set ettiğimiz property'deki sporcumuzu futbolcu olarak tanıtıp değişkene atıyoruz
 
-                kullanilmisKart.Left = kartPozisyonu;
-                pnlKartlarim.Controls.Add(kullanilmisKart);
-                kullanilmisKart.btnSec.Visible = true;
-
-                kullanilmisSporcu.setKartKullanilmisMi(false);
+                kullanilmisSporcu.setKartKullanilmisMi(false); // Oynanan kartın, KartKullanilmisMi özelliğini setter ile false yapıyoruz. Çünkü tur berabere bitti
             }
-            else if (_kullaniciOynananKart is basketbolcuKart)
+            else if (_kullaniciOynananKart is basketbolcuKart)// Önceden set ettiğimiz property'deki kartımız basketbolcuKart'ı ise bu method çalışır
             {
-                basketbolcuKart kullanilmisKart = _kullaniciOynananKart as basketbolcuKart;
-                Basketbolcu kullanilmisSporcu = _kullaniciOynananSporcu as Basketbolcu;
+                Basketbolcu kullanilmisSporcu = _kullaniciOynananSporcu as Basketbolcu; // Önceden set ettiğimiz property'deki sporcumuzu basketbolcu olarak tanıtıp değişkene atıyoruz
 
-                kullanilmisKart.Left = kartPozisyonu;
-                pnlKartlarim.Controls.Add(kullanilmisKart);
-                kullanilmisKart.btnSec.Visible = true;
-
-                kullanilmisSporcu.setKartKullanilmisMi(false);
+                kullanilmisSporcu.setKartKullanilmisMi(false); // Önceden set ettiğimiz property'deki kartımız basketbolcuKart'ı ise bu method çalışır
             }
         }
 
-        public void bilgisayarKartiSil() // Tur bittikten sonra berabere değilse bilgisayar destesinde kartı silen method (Bilgisayar aynı kartı tekrar seçmesin diye)
+        public void bilgisayarKartiSil() // Tur berabere bitmeşse bilgisayar destesinden kartı silen method
         {
             if (_bilgisayarOynananSporcu is Basketbolcu) // Önceden set ettiğimiz property'deki oynanan sporcu basketbolcuysa bu block çalışır
             {
@@ -304,6 +305,22 @@ namespace KartOyunu.UserControls
                 Futbolcu kullanilmisKart = _bilgisayarOynananSporcu as Futbolcu;  // Property'mizdeki sporcuyu, futbolcu olarak tanıtıp değişkene atıyoruz
                 if (kullanilmisKart.getKartKullanilmisMi()) // Kartın kullanılmış olup olmadığını anlamak için getter ile kartKullanilmisMi özelliğini çağırıyoruz. Eğer kart kullanılmışsa bu block çalışır
                     test._bilgisayar.kartListesi.Remove(kullanilmisKart); // Kullanılmış kartı bilgisayar destesinden siliyoruz
+            }
+        }
+
+        public void kullaniciKartiSil() // Tur berabere bitmeşse kullanıcı destesinden kartı silen method
+        {
+            if (_kullaniciOynananSporcu is Basketbolcu) // Önceden set ettiğimiz property'deki oynanan sporcu basketbolcuysa bu block çalışır
+            {
+                Basketbolcu kullanilmisKart = _kullaniciOynananSporcu as Basketbolcu;  // Property'mizdeki sporcuyu, basketbolcu olarak tanıtıp değişkene atıyoruz
+                if (kullanilmisKart.getKartKullanilmisMi()) // Kartın kullanılmış olup olmadığını anlamak için getter ile kartKullanilmisMi özelliğini çağırıyoruz. Eğer kart kullanılmışsa bu block çalışır
+                    test._kullanici.kartListesi.Remove(kullanilmisKart); // Kullanılmış kartı kullanıcı destesinden siliyoruz
+            }
+            else // Eğer oynanan sporcu futbolcuysa bu block çalışır
+            {
+                Futbolcu kullanilmisKart = _kullaniciOynananSporcu as Futbolcu; // Property'mizdeki sporcuyu, futbolcu olarak tanıtıp değişkene atıyoruz
+                if (kullanilmisKart.getKartKullanilmisMi()) // Kartın kullanılmış olup olmadığını anlamak için getter ile kartKullanilmisMi özelliğini çağırıyoruz. Eğer kart kullanılmışsa bu block çalışır
+                    test._kullanici.kartListesi.Remove(kullanilmisKart); // Kullanılmış kartı kullanıcı destesinden siliyoruz
             }
         }
         
@@ -389,12 +406,13 @@ namespace KartOyunu.UserControls
         public void sonrakiTuraGec() // Sonraki tura geçmemizi sağlayan method
         {            
             suankiTur = test.turSecici(suankiTur);// Tur secici ile sonraki turu seçiyoruz ve property'mize atıyoruz
-            turSayisi += 1; // Tur sayısını 1 arttırıyoruz
+            turSayisi += 1; // Tur sayısını 1 arttırıyoruz            
 
-            bilgisayarKartiSil(); // Tur bittikten sonra bilgisayarın oynadığı kartı destesinden silmek için bu methodu çağırıyoruz
+            InitGame(); // Oyunu yeni tura uygun yeniden set etmesi için bu methodu çağırıyoruz 
 
-            InitGame(); // Oyunu yeni tura uygun yeniden set etmesi için bu methodu çağırıyoruz
-            desteyiKontrolEt(); // Kullanıcının destesindeki kartları şuanki tura göre (Basketbolcu ve futbolcu turu) kilitlemesi için bu methodu çağırıyoruz
+            kartlariGetir(); // Kullanıcının kartlarını çekip ekrana yazdıran methodu çağırıyoruz
+            desteyiKontrolEt(); // Tur durumuna göre (Basketbolcu veya futbolcu) kartları kilityen methodu çağırıyoruz
+
             turSayisiniYazdir(); // Tur sayısını ekrana yazdırması için bu methodu çağırıyoruz
         }
         // --- Arkaplan Methodları End --------------------------------------------------------------------------------------------------------------------------------------
@@ -406,9 +424,8 @@ namespace KartOyunu.UserControls
         {            
             test = new Test();// Test Class'ımızın instance'ını alıyoruz
 
-            InitGame(); // Yeni tur için oyunu set eden methodu çağırıyoruz
-            kartlariGetir(); // Kullanıcının kartlarını çekip ekrana yazdıran methodu çağırıyoruz
-            desteyiKontrolEt(); // Tur durumuna göre (Basketbolcu veya futbolcu) kartları kilityen methodu çağırıyoruz
+            InitGame(); // Yeni tur için oyunu set eden methodu çağırıyoruz         
+
             oyuncuIsimleriniYazdir(); // Oyuncu isimlerini ekrana yazdıran methodu çağırıyoruz
         }
 
