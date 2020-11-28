@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KartOyunu.Entites
+﻿namespace KartOyunu.Entites
 {
     // Sporcu Class'ı
     public abstract class Sporcu
     {
+        // --- Fields Start -----------------------
         private string _sporcuIsim;
         private string _sporcuTakim;
-        
+        // --- Fields End -----------------------
 
         // Parametresiz constructor
         public Sporcu()
@@ -49,7 +44,7 @@ namespace KartOyunu.Entites
             return _sporcuTakim;
         }
 
-        // Sporcu puanlarını dönen methodumuz
+        // Sporcu puanlarını dönen implement edilecek methodumuz
         public abstract int sporcuPuaniGoster();
     }
 }

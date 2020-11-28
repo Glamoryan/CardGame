@@ -1,38 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 using System.Windows.Forms;
 
 namespace KartOyunu.UserControls.Utilities
-{
-    // Panellerimizi kontrol eden Class
-    public static class PanelHelper
+{    
+    public static class PanelHelper // Panellerimizi kontrol etmemize yardımcı olan static class
     {
-        private static string isaret = "?";
-
-        /// <summary>
-        /// Panel içindeki tüm kontrolleri temizler
-        /// </summary>
-        /// <param name="panel">Temizlenmek istenen panel</param>
-        public static void panelTemizle(Panel panel)
+        private static string isaret = "?"; // Bilgisayarın oynadığı kartı gizlemek için koyacağımız işaret
+       
+        public static void panelTemizle(Panel panel) // Verilen panelin içeriğini temizleyen method
         {
-            panel.Controls.Clear();
+            panel.Controls.Clear(); // Verilen paneldeki controllerin hepsini temizliyoruz
         }
-
-        /// <summary>
-        /// Verilen panelin ortasına set edilmiş string'imizi label'a atıyarak set eder.
-        /// </summary>
-        /// <param name="panel">Thumnail yazdırılmak istenen panel</param>
-        public static void panelThumbnailYazdir(Panel panel)
+        
+        public static void panelThumbnailYazdir(Panel panel) // Bilgisayarın kart koyduğu panele işaretimizi yazdıran method
         {
-            Label isaretimiz = new Label();
-            isaretimiz.Text = isaret;
-            isaretimiz.Font = new Font("Arial", 14, FontStyle.Bold);
-            panel.Controls.Add(isaretimiz);
-            isaretimiz.Location = new Point(90, 79);
+            Label isaretimiz = new Label(); // İşaretimizi yazdıracağımız label'ı oluşturuyoruz
+            isaretimiz.Text = isaret; // Label'a işaretimizi yazdırıyoruz
+            isaretimiz.Font = new Font("Arial", 14, FontStyle.Bold); // Label'ımzın font ayarlarını veriyoruz
+            panel.Controls.Add(isaretimiz); // Bize verilen panele label'ımızı ekliyoruz
+            isaretimiz.Location = new Point(90, 79); // Label'ımızın pozisyonunu, panelin ortasına denk gelecek şekilde ayarlıyoruz
         }
     }
 }

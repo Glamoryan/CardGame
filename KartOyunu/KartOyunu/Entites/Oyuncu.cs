@@ -1,22 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace KartOyunu.Entites
 {
-    // Oyuncu Abstract Class'ı
-    public abstract class Oyuncu
+    public abstract class Oyuncu // Oyuncu Abstract Class'ı
     {
+        // --- Fields Start -----------------------
         private int _oyuncuID;
         private string _oyuncuAdi;
         private int _skor;
 
-        public List<Sporcu> kartListesi { get; set; }
+        public List<Sporcu> kartListesi { get; set; } // Kart listesini tutan property
 
-        // Parametresiz constructor
-        public Oyuncu()
+        // --- Fields Start -----------------------        
+        
+        public Oyuncu() // Parametresiz constructor
         {
 
         }

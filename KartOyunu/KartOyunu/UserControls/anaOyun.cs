@@ -1,35 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using KartOyunu.Entites;
+﻿using KartOyunu.Entites;
 using KartOyunu.UserControls.Utilities;
+using System;
+using System.Windows.Forms;
 
 namespace KartOyunu.UserControls
 {
     public partial class anaOyun : UserControl
     {
-        public Test test;
-        public string suankiTur = "Futbolcu";
-        public int turSayisi = 1;
+        // --- Fields Start ---
+        public Test test; // Test class'ımızın instance'ını tutacak değişken
+        public string suankiTur = "Futbolcu"; // Tur durumunu tutacak değişken (İstenilen turda başlanabilir => Futbolcu veya Basketbolcu)
+        public int turSayisi = 1; // Tur sayısını tutacak değişken
 
-        public Sporcu _bilgisayarOynananSporcu;
-        public Sporcu _kullaniciOynananSporcu;
-        public IKartBase _kullaniciOynananKart;
-        public IKartBase _bilgisayarOynananKart;
+        public Sporcu _bilgisayarOynananSporcu; // O anki turda bilgisayarın oynadığı sporcuyu tutacak değişken 
+        public Sporcu _kullaniciOynananSporcu; // O anki turda kullanıcının oynadığı sporcuyu tutacak değişken
 
-        public int kartPozisyonu = 0;
+        public IKartBase _kullaniciOynananKart; // O anki turda kullanıcının oynadığı kartı tutacak değişken
+        public IKartBase _bilgisayarOynananKart; // O anki turda bilgisayarın oynadığı kartı tutacak değişken
 
-        public Oyuncu kazanan;
+        public int kartPozisyonu = 0; // Oynanılan kartın destedeki pozisyonunu tutacak değişken
 
+        public Oyuncu kazanan; // O turu kazanan oyuncuyu tutacak değişken
+        // --- Fields End ---
+
+
+
+        // --- Constructors Start ---
         public anaOyun()
         {
-            InitializeComponent();
+            InitializeComponent(); // Visual Studio kodu form elemanlarını oluşturur
 
             // Kartların hepsini görebilmek için kartların gösterildiği panele (pnlKartlarim) yatay scrollbar ekliyoruz
             pnlKartlarim.AutoScroll = false;
@@ -38,24 +37,75 @@ namespace KartOyunu.UserControls
             pnlKartlarim.VerticalScroll.Maximum = 0;
             pnlKartlarim.AutoScroll = true;
         }
+        // --- Constructors End ---
 
-        public void InitGame()
+
+
+        // --- Arayüz - Ekrana yazdırma methodları Start ---------------------------------------------------------------------------------------------------------------------
+        public void turSayisiniYazdir() // Tur sayısını ekrana yazdıran method
         {
+            lblTur.Text = turSayisi.ToString(); // Tur label'ımıza tur sayısını yazdırıyoruz (int olduğu için toString() ile stringe çeviriyoruz)
+        }
+
+        public void oyuncuIsimleriniYazdir() // Oyuncu isimlerini ekrana yazdıran method
+        {
+            // Kullanıcı ve Bilgisayar adlarını test class'ımızdaki Getter'lar ile paneldeki label'lara yazdırıyoruz
+            lblBilgisayarAdi.Text = test._bilgisayar.getOyuncuAdi();
+            lblKullaniciAdi.Text = test._kullanici.getOyuncuAdi();
+        }
+        
+        public void skorlariYazdir() // Oyuncu skorlarını ekrana yazdıran method
+        {
+            // Test class'ımızdaki oyuncuların getter'ları ile skorlarını set ediğ ekrana yazdırıyoruz
+            btnBilgisayarSkor.Text = test._bilgisayar.getSkor().ToString();
+            btnKullaniciSkor.Text = test._kullanici.getSkor().ToString();
+        }
+        
+        public void kazananiYazdir(Oyuncu kazanan) // Kazanan oyuncuyu ekrana yazdırıp, skorunu arttıran method
+        {
+            if (kazanan is Kullanici) // Eğer bize verilen kazanan kullanıcıysa bu block çalışır
+            {
+                test.turuKazanan(kazanan as Kullanici); // Test class'ımızdaki turuKazanan() methodu ile kullanıcıyı gönderip, skorunu arttırıyoruz                
+                MessageBox.Show(test._kullanici.getOyuncuAdi() + " turu kazandı !"); // Kazananın adını getter ile alıp ekrana çıkartıyoruz                   
+            }
+            else if (kazanan is Bilgisayar) // Eğer bize verilen kazanan bilgisayarsa bu block çalışır
+            {
+                test.turuKazanan(kazanan as Bilgisayar); // Test class'ımızdaki turuKazanan() methodu ile bilgisayarı gönderip, skorunu arttırıyoruz
+                MessageBox.Show(test._bilgisayar.getOyuncuAdi() + " turu kazandı !"); // Kazananın adını getter ile alıp ekrana çıkartıyoruz                                
+            }
+            else // Eğer kazananımız koysa bu block çalışır (kazananiBelirle() methodunda özellikleri aynı olup null döndürdüğümüz zaman)
+            {
+                MessageBox.Show("Berabere"); // Ekrana berabere yazdırıyoruz    
+                btnGec.Visible = true; // Berabere biten turdan sonra tek kart kaldıysa o turu geçmek için "Geç" butonunu görünür yapıyoruz
+
+                kullaniciKartGerial(); // Tur berabere bittiği için kullanıcı kartını geri alan methodu çağırıyoruz
+                bilgisayarKartGerial(); // Tur berabere bittiği için bilgisayar kartını geri alan methodu çağırıyoruz
+            }
+            skorlariYazdir(); // Skorları ekrana yazdırıp güncelleyen methodu çağırıyoruz
+            sonrakiTuraGec(); // Sonraki tura geçmemizi sağlana methodu çağırıyoruz
+        }
+
+        public void suankiTuruYazdir() // Şuanki turu ekrana yazdıran method (Basketbolcu veya Futbolcu turu)
+        {
+            grbHamle.Text = suankiTur; // Seçilen turu grupbox başlığına yazıyoruz
+        }
+        // --- Arayüz - Ekrana yazdırma methodları End ------------------------------------------------------------------------------------------------------------------------
+
+
+
+        // --- Arkaplan Methodları Start --------------------------------------------------------------------------------------------------------------------------------------
+        public void InitGame()// Oyunu varsayılan haline set eder
+        {
+            // Kart koyulan panelleri temizler
             PanelHelper.panelTemizle(pnlKullaniciKart);
             PanelHelper.panelTemizle(pnlBilgisayarKart);
+            
+            PanelHelper.panelThumbnailYazdir(pnlBilgisayarKart);// Bilgisayar'ın kart oynadığı panele thumbnail'ımızı getiriyoruz
 
-            // Bilgisayar'ın kart oynadığı panele thumbnail'ımızı getiriyoruz
-            PanelHelper.panelThumbnailYazdir(pnlBilgisayarKart);                       
-
-            suankiTuruYazdir();            
+            suankiTuruYazdir();// Hangi turda olduğumuzu ekrana yazdıran methodu çağırıyoruz
         }
 
-        public void turSayisiniYazdir()
-        {
-            lblTur.Text = turSayisi.ToString();
-        }
-
-        public void desteyiKontrolEt()
+        public void desteyiKontrolEt() // Tur sırasına göre kartları kilitleyip açan method
         {
             if (suankiTur == "Futbolcu") // Eğer şuanki tur Futbolcuysa bu block çalışır
             {
@@ -63,8 +113,8 @@ namespace KartOyunu.UserControls
                 {
                     if (kart is basketbolcuKart) // Eğer gezdiğimiz kart basketbolcuysa bu block çalışır
                         kart.Enabled = false; //(Şuanki tur futbolcu olduğu için basketbolcu kartlarını pasif yapıyorz)
-                    else
-                        kart.Enabled = true;
+                    else // Eğer gezdiğimiz kart basketbolcuKartı değilse bu block çalışır
+                        kart.Enabled = true; // futbolcuKartlarını etkin hale getiriyoruz
                 }
             }
             else // Eğer şuanki tur Basketbolcuysa bu block çalışır
@@ -73,20 +123,13 @@ namespace KartOyunu.UserControls
                 {
                     if (kart is futbolcuKart) // Eğer gezdiğimiz kart futbolcuysa bu block çalışır
                         kart.Enabled = false; //(Şuanki tur basketbolcu olduğu için futbolcu kartlarını pasif yapıyorz)
-                    else
-                        kart.Enabled = true;
+                    else // Eğer gezdiğimiz kart futbolcuKart değilse bu block çalışır
+                        kart.Enabled = true; // basketbolcuKartlarını etkin hale getiriyoruz
                 }
             }
         }
-
-        public void oyuncuIsimleriniYazdir()
-        {
-            // Kullanıcı ve Bilgisayar adlarını test class'ımızdaki Getter'lar ile paneldeki label'lara yazdırıyoruz
-            lblBilgisayarAdi.Text = test._bilgisayar.getOyuncuAdi();
-            lblKullaniciAdi.Text = test._kullanici.getOyuncuAdi();
-        }
-
-        public void kartlariGetir()
+        
+        public void kartlariGetir() // Kullanıcının kartlarını getirip ekrana yazdıran method
         {
             int sayac = 0; // Kartların yerlerini kontrol etmek için bir sayaç tanımlıyoruz
 
@@ -112,29 +155,8 @@ namespace KartOyunu.UserControls
                 }
             }
         }
-
-        // Anaoyun controlümüz load olunca çalışacak method
-        private void anaOyun_Load(object sender, EventArgs e)
-        {
-            // Test Class'ımızın instance'ını alıyoruz
-            test = new Test();
-
-            InitGame();
-            kartlariGetir();
-            desteyiKontrolEt();
-            oyuncuIsimleriniYazdir();
-        }       
         
-        // Oyuncu skorlarını ekrana yazdıran method
-        public void skorlariYazdir()
-        {
-            // Test class'ımızdaki oyuncuların getter'ları ile skorlarını set ediğ ekrana yazdırıyoruz
-            btnBilgisayarSkor.Text = test._bilgisayar.getSkor().ToString();
-            btnKullaniciSkor.Text = test._kullanici.getSkor().ToString();
-        }
-
-        // Bilgisayarın kartını görsel olarak oynatan method
-        public void bilgisayarKartOyna()
+        public void bilgisayarKartOyna()// Bilgisayarın kartını görsel olarak oynatan method
         {
             if (suankiTur == "Basketbolcu") // Şuanki tur basketbolcuysa bu block çalışır
             {
@@ -143,11 +165,11 @@ namespace KartOyunu.UserControls
                 basketbolcuKart oynanacakKart = new basketbolcuKart((Basketbolcu)_bilgisayarOynananSporcu); // Tur sırası basketbolcu olduğu için basketbolcuKartı instance'ı oluşturup oynanacakSporcuyu contructor'ını veriyoruz
                 PanelHelper.panelTemizle(pnlBilgisayarKart); // Bilgisayar'ın kartı koyduğu paneli temizliyoruz
                 pnlBilgisayarKart.Controls.Add(oynanacakKart); // Oluşturduğumuz kartı Bilgisayar'ın kart koyduğu panele ekliyoruz
-                oynanacakKart.btnSec.Visible = false;
-                _bilgisayarOynananKart = oynanacakKart;
+                oynanacakKart.btnSec.Visible = false; // Oynanılan kartın üzerindeki seç butonunu tekrar seçilmesin diye görünürlüğünü kapatıyoruz
+                _bilgisayarOynananKart = oynanacakKart; // Bilgisayarın oynadığı kartı başka bir yerde kullanmak için property'mize atıyoruz
 
-                Basketbolcu koyulanKart = _bilgisayarOynananSporcu as Basketbolcu;
-                koyulanKart.setKartKullanilmisMi(true);
+                Basketbolcu koyulanKart = _bilgisayarOynananSporcu as Basketbolcu; // Oynanılan kartı (Sporcu) basketbolcu olarak tanıtıp değişkene atıyoruz (Özelliklerine erişmek için)
+                koyulanKart.setKartKullanilmisMi(true); // Oynanılan kartın kartKullanilmisMi özelliğini setter ile true'ya set ediyoruz
             }
             else // Şuanki tur futbolcuysa block çalışır
             {
@@ -156,137 +178,49 @@ namespace KartOyunu.UserControls
                 futbolcuKart oynanacakKart = new futbolcuKart((Futbolcu)_bilgisayarOynananSporcu);// Tur sırası futbolcu olduğu için futbolcuKartı instance'ı oluşturup oynanacakSporcuyu contructor'ını veriyoruz
                 PanelHelper.panelTemizle(pnlBilgisayarKart);// Bilgisayar'ın kartı koyduğu paneli temizliyoruz
                 pnlBilgisayarKart.Controls.Add(oynanacakKart);// Oluşturduğumuz kartı Bilgisayar'ın kart koyduğu panele ekliyoruz
-                oynanacakKart.btnSec.Visible = false;
-                _bilgisayarOynananKart = oynanacakKart;
+                oynanacakKart.btnSec.Visible = false; // Oynanılan kartın üzerindeki seç butonunu tekrar seçilmesin diye görünürlüğünü kapatıyoruz
+                _bilgisayarOynananKart = oynanacakKart; // Bilgisayarın oynadığı kartı başka bir yerde kullanmak için property'mize atıyoruz
 
-                Futbolcu koyulanKart = _bilgisayarOynananSporcu as Futbolcu;
-                koyulanKart.setKartKullanilmisMi(true);
+                Futbolcu koyulanKart = _bilgisayarOynananSporcu as Futbolcu; // Oynanılan kartı (Sporcu) futbolcu olarak tanıtıp değişkene atıyoruz (Özelliklerine erişmek için)
+                koyulanKart.setKartKullanilmisMi(true); // Oynanılan kartın kartKullanilmisMi özelliğini setter ile true'ya set ediyoruz
             }
         }
-
-        // Kazanan oyuncuyu ekrana yazdırıp, skorunu arttıran method
-        public void kazananiYazdir(Oyuncu kazanan)
+        
+        public void kullaniciKartOyna(Sporcu secilenKart, IKartBase kartTuru)// Kullanıcının kartını oynatan method
         {
-            if (kazanan is Kullanici) // Eğer bize verilen kazanan kullanıcıysa bu block çalışır
-            {
-                test.turuKazanan(kazanan as Kullanici); // Test class'ımızdaki turuKazanan() methodu ile kullanıcıyı gönderip, skorunu arttırıyoruz                
-                MessageBox.Show(test._kullanici.getOyuncuAdi() + " turu kazandı !"); // Kazananın adını getter ile alıp ekrana çıkartıyoruz                   
-            }
-            else if (kazanan is Bilgisayar) // Eğer bize verilen kazanan bilgisayarsa bu block çalışır
-            {
-                test.turuKazanan(kazanan as Bilgisayar); // Test class'ımızdaki turuKazanan() methodu ile bilgisayarı gönderip, skorunu arttırıyoruz
-                MessageBox.Show(test._bilgisayar.getOyuncuAdi() + " turu kazandı !"); // Kazananın adını getter ile alıp ekrana çıkartıyoruz                                
-            }
-            else // Eğer kazananımız koysa bu block çalışır (kazananiBelirle() methodunda özellikleri aynı olup null döndürdüğümüz zaman)
-            {
-                MessageBox.Show("Berabere"); // Ekrana berabere yazdırıyoruz    
-                btnGec.Visible = true;
-
-                kullaniciKartGerial();
-                bilgisayarKartGerial();
-            }
-            skorlariYazdir();
-            sonrakiTuraGec();
-        }
-
-        public void kullaniciKartGerial()
-        {
-            if (_kullaniciOynananKart is futbolcuKart)
-            {
-                futbolcuKart kullanilmisKart = _kullaniciOynananKart as futbolcuKart;
-                Futbolcu kullanilmisSporcu = _kullaniciOynananSporcu as Futbolcu;
-
-                kullanilmisKart.Left = kartPozisyonu;
-                pnlKartlarim.Controls.Add(kullanilmisKart);
-                kullanilmisKart.btnSec.Visible = true;
-
-                kullanilmisSporcu.setKartKullanilmisMi(false);
-            }
-            else if (_kullaniciOynananKart is basketbolcuKart)
-            {
-                basketbolcuKart kullanilmisKart = _kullaniciOynananKart as basketbolcuKart;
-                Basketbolcu kullanilmisSporcu = _kullaniciOynananSporcu as Basketbolcu;
-
-                kullanilmisKart.Left = kartPozisyonu;
-                pnlKartlarim.Controls.Add(kullanilmisKart);
-                kullanilmisKart.btnSec.Visible = true;
-
-                kullanilmisSporcu.setKartKullanilmisMi(false);
-            }
-        }
-
-        public void bilgisayarKartGerial()
-        {
-            if (_bilgisayarOynananKart is futbolcuKart)
-            {
-                futbolcuKart kullanilmisKart = _bilgisayarOynananKart as futbolcuKart;
-                Futbolcu kullanilmisSporcu = _bilgisayarOynananSporcu as Futbolcu;
-
-                kullanilmisSporcu.setKartKullanilmisMi(false);
-            }
-            else if (_bilgisayarOynananKart is basketbolcuKart)
-            {
-                basketbolcuKart kullanilmisKart = _bilgisayarOynananKart as basketbolcuKart;
-                Basketbolcu kullanilmisSporcu = _bilgisayarOynananSporcu as Basketbolcu;
-
-                kullanilmisSporcu.setKartKullanilmisMi(false);
-            }
-        }
-
-        // Bilgisayar destesini kullanıcı yönetemediği için kartı oynadıktan sonra silen method (Tur bittikten sonra, init'den önce çağırılmalı)
-        public void bilgisayarKartiSil()
-        {
-            if (_bilgisayarOynananSporcu is Basketbolcu)
-            {
-                Basketbolcu kullanilmisKart = _bilgisayarOynananSporcu as Basketbolcu;
-                if (kullanilmisKart.getKartKullanilmisMi())
-                    test._bilgisayar.kartListesi.Remove(kullanilmisKart);
-            }
-            else
-            {
-                Futbolcu kullanilmisKart = _bilgisayarOynananSporcu as Futbolcu;
-                if (kullanilmisKart.getKartKullanilmisMi())
-                    test._bilgisayar.kartListesi.Remove(kullanilmisKart);
-            }
-        }        
-
-        // Kullanıcının kartını görsel olarak oynatan method
-        public void kullaniciKartOyna(Sporcu secilenKart,IKartBase kartTuru)
-        {                        
             // Seçilmiş kartın türünü belirleyip atamalarını yapıyoruz.
             futbolcuKart fKart = kartTuru as futbolcuKart;
-            basketbolcuKart bKart = kartTuru as basketbolcuKart;            
+            basketbolcuKart bKart = kartTuru as basketbolcuKart;
 
             _kullaniciOynananSporcu = test._kullanici.kartSec(secilenKart); // Kullanıcının kartSec() methoduna seçilen kartımızı gönderip dönen değeri değişkene atıyoruz
-            
+
             PanelHelper.panelTemizle(pnlKullaniciKart); // Kullanıcının kartını oynadığı paneli temizliyoruz
             if (_kullaniciOynananSporcu is Basketbolcu && kartTuru is basketbolcuKart) //Eğer kartımız basketbolcuysa ve kartTürümüz basketbolcu kartıysa bu block çalışır
-            {                
+            {
                 pnlKullaniciKart.Controls.Add(bKart); // Kullanıcının kart oynadığı panele kartımızı ekliyoruz
-                bKart.Left = 0; // BasketbolcuKartımızı yeniden oluşturmadığımız için önceki kartımızdan kalan Left değerini 0'lıyoruz. (Kullanıcı kartınının oynandığı yere tam otursun diye)
-                bKart.btnSec.Visible = false;
-                _kullaniciOynananKart = bKart;
-                kartPozisyonu = bKart.Left;
+                bKart.Left = 0; // BasketbolcuKartımızı yeniden oluşturmadığımız için önceki kartımızdan kalan Left değerini 0'lıyoruz. (Kullanıcı kartınının oynandığı panele tam otursun diye)
+                bKart.btnSec.Visible = false; // Oynanılan kart tekrar seçilmesin diye seç butonunu gizliyoruz
+                _kullaniciOynananKart = bKart; // Oynanan kartı başka bir yerde kullanmak için property'mize set ediyoruz
+                kartPozisyonu = bKart.Left; // Kartın left değerini başka bir yerde kullanmak için property'mize set ediyoruz
 
-                Basketbolcu koyulanKart = _kullaniciOynananSporcu as Basketbolcu;
-                koyulanKart.setKartKullanilmisMi(true);
+                Basketbolcu koyulanKart = _kullaniciOynananSporcu as Basketbolcu; // Oynanılan kartı (Sporcu) basketbolcu olarak tanıtıp değişkene atıyoruz (Özelliklerine erişmek için)
+                koyulanKart.setKartKullanilmisMi(true); // Oynanılan kartın kartKullanilmisMi özelliğini setter ile true'ya set ediyoruz
             }
             else if (_kullaniciOynananSporcu is Futbolcu && kartTuru is futbolcuKart) // Eğer kartımız futbolcuysa ve kartTürümüz futbolcu kartıysa bu block çalışır
-            {                
+            {
                 pnlKullaniciKart.Controls.Add(fKart);// Kullanıcının kart oynadığı panele kartımızı ekliyoruz
                 fKart.Left = 0;// FutbolcuKartımızı yeniden oluşturmadığımız için önceki kartımızdan kalan Left değerini 0'lıyoruz. (Kullanıcı kartınının oynandığı yere tam otursun diye)
-                fKart.btnSec.Visible = false;
-                _kullaniciOynananKart = fKart;
-                kartPozisyonu = fKart.Left;
+                fKart.btnSec.Visible = false; // Oynanılan kart tekrar seçilmesin diye seç butonunu gizliyoruz
+                _kullaniciOynananKart = fKart; // Oynanan kartı başka bir yerde kullanmak için property'mize set ediyoruz
+                kartPozisyonu = fKart.Left; // Kartın left değerini başka bir yerde kullanmak için property'mize set ediyoruz
 
-                Futbolcu koyulanKart = _kullaniciOynananSporcu as Futbolcu;
-                koyulanKart.setKartKullanilmisMi(true);
+                Futbolcu koyulanKart = _kullaniciOynananSporcu as Futbolcu; // Oynanılan kartı (Sporcu) futbolcu olarak tanıtıp değişkene atıyoruz (Özelliklerine erişmek için)
+                koyulanKart.setKartKullanilmisMi(true); // Oynanılan kartın kartKullanilmisMi özelliğini setter ile true'ya set ediyoruz
             }
 
             bilgisayarKartOyna(); // Kartımızı oynadıktan sonra, Bilgisayarda kartını oynasın diye bilgisayarKartOyna() methodunu çağırıyoruz            
-
-            // Kartı oynadıktan sonra pozisyonSec() methodunu çağırıyoruz
-            switch (pozisyonSec())
+            
+            switch (pozisyonSec())// Kartı oynadıktan sonra pozisyonSec() methodunu çağırıyoruz
             {
                 case "Penaltı": //pozisyonSec() methodundan dönen özellik penaltı ise bu block çalışır
                     kazanan = kazananiBelirle("penaltı"); // Kazananı, kazananiBelirle metoduna özelliğimizi göndererek seçeriz
@@ -313,19 +247,76 @@ namespace KartOyunu.UserControls
                     kazananiYazdir(kazanan); // Kazananı, ekrana yazdırmak ve skorunu arttırmak için kazananıYazdir() methoduna göndeririz
                     break;// Bu block'u bitiririz
             }
-        }       
+        }
 
-        // Kazanan oyuncuyu belirleyip geri döndüren method
-        public Oyuncu kazananiBelirle(string ozellik)
-        {            
+        public void bilgisayarKartGerial() // Bilgisayarın berabere biten tur sonunda kartını geri almasını sağlayan method
+        {
+            if (_bilgisayarOynananKart is futbolcuKart) // Önceden set ettiğimiz property'deki kartımız futbolcuKart'ı ise bu method çalışır
+            {                
+                Futbolcu kullanilmisSporcu = _bilgisayarOynananSporcu as Futbolcu; // Önceden set ettiğimiz property'deki sporcumuzu futbolcu olarak tanıtıp değişkene atıyoruz
+
+                kullanilmisSporcu.setKartKullanilmisMi(false); // Oynanan kartın, KartKullanilmisMi özelliğini setter ile false yapıyoruz. Çünkü tur berabere bitti
+            }
+            else if (_bilgisayarOynananKart is basketbolcuKart) // Önceden set ettiğimiz property'deki kartımız basketbolcuKart'ı ise bu method çalışır
+            {                
+                Basketbolcu kullanilmisSporcu = _bilgisayarOynananSporcu as Basketbolcu; // Önceden set ettiğimiz property'deki sporcumuzu basketbolcu olarak tanıtıp değişkene atıyoruz
+
+                kullanilmisSporcu.setKartKullanilmisMi(false); // Önceden set ettiğimiz property'deki kartımız basketbolcuKart'ı ise bu method çalışır
+            }
+        }
+
+        public void kullaniciKartGerial()  //Düzeltilecek, geri alınan kartlar iç içe geçiyor
+        {
+            if (_kullaniciOynananKart is futbolcuKart)
+            {
+                futbolcuKart kullanilmisKart = _kullaniciOynananKart as futbolcuKart;
+                Futbolcu kullanilmisSporcu = _kullaniciOynananSporcu as Futbolcu;
+
+                kullanilmisKart.Left = kartPozisyonu;
+                pnlKartlarim.Controls.Add(kullanilmisKart);
+                kullanilmisKart.btnSec.Visible = true;
+
+                kullanilmisSporcu.setKartKullanilmisMi(false);
+            }
+            else if (_kullaniciOynananKart is basketbolcuKart)
+            {
+                basketbolcuKart kullanilmisKart = _kullaniciOynananKart as basketbolcuKart;
+                Basketbolcu kullanilmisSporcu = _kullaniciOynananSporcu as Basketbolcu;
+
+                kullanilmisKart.Left = kartPozisyonu;
+                pnlKartlarim.Controls.Add(kullanilmisKart);
+                kullanilmisKart.btnSec.Visible = true;
+
+                kullanilmisSporcu.setKartKullanilmisMi(false);
+            }
+        }
+
+        public void bilgisayarKartiSil() // Tur bittikten sonra berabere değilse bilgisayar destesinde kartı silen method (Bilgisayar aynı kartı tekrar seçmesin diye)
+        {
+            if (_bilgisayarOynananSporcu is Basketbolcu) // Önceden set ettiğimiz property'deki oynanan sporcu basketbolcuysa bu block çalışır
+            {
+                Basketbolcu kullanilmisKart = _bilgisayarOynananSporcu as Basketbolcu; // Property'mizdeki sporcuyu, basketbolcu olarak tanıtıp değişkene atıyoruz
+                if (kullanilmisKart.getKartKullanilmisMi()) // Kartın kullanılmış olup olmadığını anlamak için getter ile kartKullanilmisMi özelliğini çağırıyoruz. Eğer kart kullanılmışsa bu block çalışır
+                    test._bilgisayar.kartListesi.Remove(kullanilmisKart); // Kullanılmış kartı bilgisayar destesinden siliyoruz
+            }
+            else // Eğer oynanan sporcu futbolcuysa bu block çalışır
+            {
+                Futbolcu kullanilmisKart = _bilgisayarOynananSporcu as Futbolcu;  // Property'mizdeki sporcuyu, futbolcu olarak tanıtıp değişkene atıyoruz
+                if (kullanilmisKart.getKartKullanilmisMi()) // Kartın kullanılmış olup olmadığını anlamak için getter ile kartKullanilmisMi özelliğini çağırıyoruz. Eğer kart kullanılmışsa bu block çalışır
+                    test._bilgisayar.kartListesi.Remove(kullanilmisKart); // Kullanılmış kartı bilgisayar destesinden siliyoruz
+            }
+        }
+        
+        public Oyuncu kazananiBelirle(string ozellik)// Kazanan oyuncuyu belirleyip geri döndüren method
+        {
             if (suankiTur == "Futbolcu") // Eğer şuanki tur futbolcu turuysa bu block çalışır
             {
                 // Oynanılan kartları (Sporcu türündeki) futbolcu türünde tanıtıp değişkenlere atıyoruz
                 Futbolcu kullaniciKazanan = _kullaniciOynananSporcu as Futbolcu;
-                Futbolcu bilgisayarKazanan = _bilgisayarOynananSporcu as Futbolcu;                
+                Futbolcu bilgisayarKazanan = _bilgisayarOynananSporcu as Futbolcu;
 
                 if (ozellik == "penaltı") // Eğer bize verilen özellik penaltı ise bu block çalışır
-                {                    
+                {
                     if (kullaniciKazanan.getPenalti() > bilgisayarKazanan.getPenalti())//Eğer kullanıcının kartındaki penaltı özelliği bilgisayarın kartındaki penaltı özelliğinden daha büyükse bu block çalışır
                         return test._kullanici;// Kullanıcının kartının özelliği daha büyük olduğu için kazanan kullanıcı olur ve geri döndürürüz
                     else if (kullaniciKazanan.getPenalti() < bilgisayarKazanan.getPenalti())//Eğer kullanıcının kartındaki penaltı özelliği bilgisayarın kartındaki penaltı özelliğinden daha küçükse bu block çalışır
@@ -387,36 +378,44 @@ namespace KartOyunu.UserControls
                 }
             }
         }
-
-        // Şuanki tura göre (Basketbolcu veya Futbolcu turu) özellik seçip ekrana yazdıran method
-        public string pozisyonSec()
+        
+        public string pozisyonSec()// Şuanki tura göre (Basketbolcu veya Futbolcu turu) özellik seçip ekrana yazdıran method
         {
             string secilenOzellik = test.poziyonSecici(suankiTur); // Test class'ımızdaki pozisyonSecici() methodumuzu çağırıp değişkene atıyoruz
             lblOzellik.Text = secilenOzellik; // Seçilen özelliği label'ımıza yazdırıyoruz
             return secilenOzellik; // Seçilen özelliği geri döndürüyoruz
-        }        
-
-        public void sonrakiTuraGec()
-        {
-            // Tur secici ile sonraki turu seçiyoruz
-            suankiTur = test.turSecici(suankiTur);
-            turSayisi += 1;
-
-            bilgisayarKartiSil();
-
-            InitGame();
-            desteyiKontrolEt();
-            turSayisiniYazdir();            
         }
 
-        public void suankiTuruYazdir()
-        {
-            grbHamle.Text = suankiTur; // Seçilen turu grupbox başlığına yazıyoruz
+        public void sonrakiTuraGec() // Sonraki tura geçmemizi sağlayan method
+        {            
+            suankiTur = test.turSecici(suankiTur);// Tur secici ile sonraki turu seçiyoruz ve property'mize atıyoruz
+            turSayisi += 1; // Tur sayısını 1 arttırıyoruz
+
+            bilgisayarKartiSil(); // Tur bittikten sonra bilgisayarın oynadığı kartı destesinden silmek için bu methodu çağırıyoruz
+
+            InitGame(); // Oyunu yeni tura uygun yeniden set etmesi için bu methodu çağırıyoruz
+            desteyiKontrolEt(); // Kullanıcının destesindeki kartları şuanki tura göre (Basketbolcu ve futbolcu turu) kilitlemesi için bu methodu çağırıyoruz
+            turSayisiniYazdir(); // Tur sayısını ekrana yazdırması için bu methodu çağırıyoruz
+        }
+        // --- Arkaplan Methodları End --------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+        // --- Eventler (Olaylar) Start -------------------------------------------------------------------------------------------------------------------------------------        
+        private void anaOyun_Load(object sender, EventArgs e)// Anaoyun controlümüz yüklendiğinde çalışacak event
+        {            
+            test = new Test();// Test Class'ımızın instance'ını alıyoruz
+
+            InitGame(); // Yeni tur için oyunu set eden methodu çağırıyoruz
+            kartlariGetir(); // Kullanıcının kartlarını çekip ekrana yazdıran methodu çağırıyoruz
+            desteyiKontrolEt(); // Tur durumuna göre (Basketbolcu veya futbolcu) kartları kilityen methodu çağırıyoruz
+            oyuncuIsimleriniYazdir(); // Oyuncu isimlerini ekrana yazdıran methodu çağırıyoruz
         }
 
-        private void btnGec_Click(object sender, EventArgs e)
+        private void btnGec_Click(object sender, EventArgs e) // Sonraki tura geç butonuna tıklandığında çalışacak event
         {
-            sonrakiTuraGec();            
+            sonrakiTuraGec(); // Sonraki tura geçmek için bu methodu çağırıyoruz
         }
+        // --- Eventler (Olaylar) End -------------------------------------------------------------------------------------------------------------------------------------        
     }
 }

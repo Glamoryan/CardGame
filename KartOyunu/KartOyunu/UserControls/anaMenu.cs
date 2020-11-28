@@ -1,47 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using KartOyunu.UserControls.Utilities;
+using System;
 using System.Windows.Forms;
-using KartOyunu.UserControls.Utilities;
 
 namespace KartOyunu.UserControls
 {
-    // Sadece anamenüyü içeren UserControl Class'ı
-    public partial class anaMenu : UserControl
+    public partial class anaMenu : UserControl // Sadece anamenüyü içeren UserControl
     {
-        public anaOyun _anaOyun;
-        private Panel anaPanel;
+        // --- Fieds Start ---------------------
+        public anaOyun _anaOyun; // AnaOyun instance'ımızı tutan değişken
+        private Panel anaPanel; // AnaPanel panelimizi tutan değişken
+        // --- Fieds End ---------------------
+
+
+        // --- Constructors Start --------------------------
         public anaMenu()
         {
-            InitializeComponent();            
+            InitializeComponent();// UserControl elemanlarımızı oluşturan Visual Studio methodu            
         }
+        // --- Constructors End ----------------------------
 
-        // Anamenü load methodu
-        private void anaMenu_Load(object sender, EventArgs e)
+        // --- Events (Olaylar) Start -----------------------------        
+        private void anaMenu_Load(object sender, EventArgs e) // UserControlümüz ilk yüklendiğinde çalışacak event
         {
             anaPanel = this.Parent as Panel;  // Bu userControl'ün içinde bulunduğu paneli (pnlMain) "this" ile panel olarak seçtip atadık
         }
-
-        // Çıkış butonu tıklanma methodu
-        private void btnCikis_Click(object sender, EventArgs e)
+        
+        private void btnCikis_Click(object sender, EventArgs e)// Çıkış butonuna tıklandığında çalışacak event
         {
             Application.Exit(); //Uygulamadan çıkış
         }
-
-        // Başlat butonu tıklanma methodu
-        private void btnBaslat_Click(object sender, EventArgs e)
+        
+        private void btnBaslat_Click(object sender, EventArgs e) // Başlat butonuna tıklandığında çalışacak event
         {                        
-            if(_anaOyun == null)
+            if(_anaOyun == null) // Eğer anaOyun değişkenimiz boşsa bu block çalışır
             {
-                PanelHelper.panelTemizle(anaPanel); 
-                _anaOyun = new anaOyun();
-                anaPanel.Controls.Add(_anaOyun);
+                PanelHelper.panelTemizle(anaPanel); // AnaPaneli temizleyen method
+                _anaOyun = new anaOyun(); // anaOyunun yeni instance'ını oluşturup değişkene atıyoruz
+                anaPanel.Controls.Add(_anaOyun); // AnaPanel'e oluşturduğumuz anaOyun UserControl'ünü ekliyoruz
             }
-        }        
+        }
+        // --- Events (Olaylar) Start -----------------------------
     }
 }

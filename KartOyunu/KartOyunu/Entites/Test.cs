@@ -1,26 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KartOyunu.Entites
 {
-    // Oyunun yönetildiği test class'ı
-    public class Test
+    public class Test // Oyunun yönetildiği test class'ı
     {
         // Oyuncularmızın property'leri
         public Oyuncu _kullanici { get; set; }
         public Oyuncu _bilgisayar { get; set; }
 
-        // Parametresiz constructor
+        // Parametresiz constructor, (Oyuncu bilgileri verilmeden)
         public Test()
         {
             // Test class'ımızın instance'ı alındığında oyunuBaslat() methodu çalışıp oyunu başlatacak
             oyunuBaslat();
         }
 
-        // Parametreli constructor
+        // Parametreli constructor, (Oyuncu bilgileri verilerek)
         public Test(Oyuncu kullanici,Oyuncu bilgisayar)
         {
             // Parametreyle verilen propertiylerimizi set ediyoruz
@@ -31,71 +27,50 @@ namespace KartOyunu.Entites
             oyunuBaslat();
         }
 
-        // Sporcuları oluşturan method
-        public List<Sporcu> sporcuOlustur()
+        // --- Set Edici Methodlar Start ----------------------------------------------------------------------------------
+        public void oyunuBaslat() // Oyuncuları set edip, oyunu başlatan method
+        {
+            if (_kullanici == null || _bilgisayar == null) // Eğer oyuncu propertylerimiz set edilmediyse bu block çalışır
+            {
+                // Oyuncu propertylerimizi set ediyoruz
+                _kullanici = new Kullanici(1, "Kullanıcı", 0); // oyuncuId, oyuncuAdı ve skor
+                _bilgisayar = new Bilgisayar(2, "Bilgisayar", 0); // oyuncuId, oyuncuAdı ve skor
+            }
+
+            // kartDagitici() 'dan gelen array'i oyuncuların kartListesine atıyoruz (kartDagitici()'dan dönen 0.index kullanıcıDestesi , 1.index bilgisayar destesi)
+            List<Sporcu>[] deste16 = kartDagitici();
+            _kullanici.kartListesi = deste16[0];
+            _bilgisayar.kartListesi = deste16[1];
+        }
+
+        public List<Sporcu> sporcuOlustur() // Sporcuları oluşturan method
         {
             List<Sporcu> sporcular = new List<Sporcu>();
             // Futbolcu isimleri ve takımları constructor ile tanımlandı
             sporcular.Add(new Futbolcu("Cristiano Ronaldo", "Juventus", 95, 80, 90));
-            sporcular.Add(new Futbolcu("Lionel Messi", "Barcelona",100,75,90));
-            sporcular.Add(new Futbolcu("Neymar", "Paris Saint-Germain",85,80,95));
-            sporcular.Add(new Futbolcu("Robert Lewandowski", "Bayern Munih",80,70,75));
-            sporcular.Add(new Futbolcu("Zlatan Ibrahimovic", "Milan",70,75,80));
-            sporcular.Add(new Futbolcu("Sergio Ramos", "Real Madrid",85,75,70));
-            sporcular.Add(new Futbolcu("Luka Modric", "Real Madrid",85,85,80));
-            sporcular.Add(new Futbolcu("Gareth Bale", "Tottenham",90,85,90));
+            sporcular.Add(new Futbolcu("Lionel Messi", "Barcelona", 100, 75, 90));
+            sporcular.Add(new Futbolcu("Neymar", "Paris Saint-Germain", 85, 80, 95));
+            sporcular.Add(new Futbolcu("Robert Lewandowski", "Bayern Munih", 80, 70, 75));
+            sporcular.Add(new Futbolcu("Zlatan Ibrahimovic", "Milan", 70, 75, 80));
+            sporcular.Add(new Futbolcu("Sergio Ramos", "Real Madrid", 85, 75, 70));
+            sporcular.Add(new Futbolcu("Luka Modric", "Real Madrid", 85, 85, 80));
+            sporcular.Add(new Futbolcu("Gareth Bale", "Tottenham", 90, 85, 90));
 
             // Basketbolcu isimleri ve takımları constructor ile tanımlandı - Özellikleri ise settar'ları ile tanımlandı
-            sporcular.Add(new Basketbolcu("Lebron James", "Lakers",85,80,95));
-            sporcular.Add(new Basketbolcu("Stephen Curry", "Goldent State",85,95,90));
-            sporcular.Add(new Basketbolcu("James Harden", "Houston Rockets",85,75,85));
-            sporcular.Add(new Basketbolcu("Kawhi Leonard", "Lakers",85,85,85));
-            sporcular.Add(new Basketbolcu("Yannis Adetokunbo", "Milwaukee",80,85,85));
-            sporcular.Add(new Basketbolcu("Chris Paul", "Oklahoma",75,70,80));
-            sporcular.Add(new Basketbolcu("Anthony Davis", "Lakers",85,85,90));
-            sporcular.Add(new Basketbolcu("Kyrie Irving", "Brooklyn",90,85,89));
+            sporcular.Add(new Basketbolcu("Lebron James", "Lakers", 85, 80, 95));
+            sporcular.Add(new Basketbolcu("Stephen Curry", "Goldent State", 85, 95, 90));
+            sporcular.Add(new Basketbolcu("James Harden", "Houston Rockets", 85, 75, 85));
+            sporcular.Add(new Basketbolcu("Kawhi Leonard", "Lakers", 85, 85, 85));
+            sporcular.Add(new Basketbolcu("Yannis Adetokunbo", "Milwaukee", 80, 85, 85));
+            sporcular.Add(new Basketbolcu("Chris Paul", "Oklahoma", 75, 70, 80));
+            sporcular.Add(new Basketbolcu("Anthony Davis", "Lakers", 85, 85, 90));
+            sporcular.Add(new Basketbolcu("Kyrie Irving", "Brooklyn", 90, 85, 89));
 
             // Oluşturulan sporcu listesini geri döndürür
             return sporcular;
         }
 
-        // Verilen tura göre sıradaki turu döndüren method
-        public string turSecici(string verilenTur)
-        {
-            // Eğer bize verilen tur futbolcuysa diğer turu döndürüyoruz (Basketbolcu turu verilirse Futbolcu, Futbolcu turu verilirse Basketbolcu turu döner)
-            return verilenTur == "Futbolcu" ? "Basketbolcu" : "Futbolcu";
-        }
-
-        // Verilen sporcuya göre rastgele pozisyon seçen method
-        public string poziyonSecici(string turSirasi)
-        {
-            // Sporcu pozisyonları listelere atandı
-            List<string> basketbolcuPozisyonlari = new List<string>
-            {
-                "İkilik","Üçlük","Serbest Atış"
-            };
-            List<string> futbolcuPozisyonlari = new List<string>
-            {
-                "Penaltı","Serbest Vuruş","Kaleciyle Karşı Karşıya"
-            };
-
-            // Rastgele seçim için Random class'ının instance'ını tanımlıyoruz
-            var random = new Random();
-            
-            if (turSirasi == "Basketbolcu")// Eğer hamle sırası basketbolcudaysa bu block çalışacak
-            {
-                int index = random.Next(basketbolcuPozisyonlari.Count); // Random.Next methodu ile listeden 0 ile listenin uzunluğu arasında(Count) rastgele bir index seçildi
-                return basketbolcuPozisyonlari[index]; // Seçilen index'i geri döndürdük
-            }
-            else // Eğer hamle sırası futbolcudaysa bu block çalışacak
-            {
-                int index = random.Next(futbolcuPozisyonlari.Count);// Random.Next methodu ile listeden 0 ile listenin uzunluğu arasında(Count) rastgele bir index seçildi
-                return futbolcuPozisyonlari[index];// Seçilen index'i geri döndürdük
-            }
-        }
-
-        // Oyun başladığında iki tarafada kartları dağıtan method
-        public List<Sporcu>[] kartDagitici()
+        public List<Sporcu>[] kartDagitici()// Oyun başladığında iki tarafada kartları dağıtan method
         {
             List<Sporcu> deste = sporcuOlustur(); // sporcuOlustur() ile 16 kartlık destemizi oluşturuyoruz.
 
@@ -117,7 +92,7 @@ namespace KartOyunu.Entites
                     kullaniciDestesi.Add(secilenKart); // Kullanıcı destesine basketbolcu kartını ekliyoruz
                     basketbolcuAdedi += 1; // Basketbolcu adedini 1 arttırıyoruz
                     deste.Remove(secilenKart); // Seçilen kart tekrar seçilmemesi için desteden siliyoruz
-                }   
+                }
                 // Eğer seçilen kart futbolcuysa ve futbolcu adedi 4'ten küçükse ve seçilen kart daha önce kullanıcı destesine eklenmemişse bu block çalışır
                 else if (secilenKart is Futbolcu && futbolcuAdedi < 4)
                 {
@@ -136,26 +111,44 @@ namespace KartOyunu.Entites
             }
 
             // Oluşturduğumuz 2 desteyide Array olarak geri döndürüyoruz.
-            return new List<Sporcu>[] { kullaniciDestesi,bilgisayarDestesi}; 
-        }       
-        
-        public void oyunuBaslat()
-        {
-            if(_kullanici == null || _bilgisayar == null) // Eğer oyuncu propertylerimiz set edilmediyse bu block çalışır
-            {
-                // Oyuncu propertylerimizi set ediyoruz
-                _kullanici = new Kullanici(1, "Kullanıcı", 0); // oyuncuId, oyuncuAdı ve skor
-                _bilgisayar = new Bilgisayar(2, "Bilgisayar", 0); // oyuncuId, oyuncuAdı ve skor
-            }            
-
-            // kartDagitici() 'dan gelen array'i oyuncuların kartListesine atıyoruz (kartDagitici()'dan dönen 0.index kullanıcıDestesi , 1.index bilgisayar destesi)
-            List<Sporcu>[] deste16 = kartDagitici();
-            _kullanici.kartListesi = deste16[0];
-            _bilgisayar.kartListesi = deste16[1];            
+            return new List<Sporcu>[] { kullaniciDestesi, bilgisayarDestesi };
         }
 
-        // Turu kazanan oyuncunun skorunu set eden method
-        public void turuKazanan(Oyuncu kazanan)
+        // Secici methodları start -------->
+        public string turSecici(string verilenTur)// Verilen tura göre sıradaki turu döndüren method
+        {
+            // Eğer bize verilen tur futbolcuysa diğer turu döndürüyoruz (Basketbolcu turu verilirse Futbolcu, Futbolcu turu verilirse Basketbolcu turu döner)
+            return verilenTur == "Futbolcu" ? "Basketbolcu" : "Futbolcu";
+        }
+
+        public string poziyonSecici(string turSirasi) // Verilen sporcuya göre rastgele pozisyon seçen method
+        {
+            // Sporcu pozisyonları listelere atandı
+            List<string> basketbolcuPozisyonlari = new List<string>
+            {
+                "İkilik","Üçlük","Serbest Atış"
+            };
+            List<string> futbolcuPozisyonlari = new List<string>
+            {
+                "Penaltı","Serbest Vuruş","Kaleciyle Karşı Karşıya"
+            };
+
+            // Rastgele seçim için Random class'ının instance'ını tanımlıyoruz
+            var random = new Random();
+
+            if (turSirasi == "Basketbolcu")// Eğer hamle sırası basketbolcudaysa bu block çalışacak
+            {
+                int index = random.Next(basketbolcuPozisyonlari.Count); // Random.Next methodu ile listeden 0 ile listenin uzunluğu arasında(Count) rastgele bir index seçildi
+                return basketbolcuPozisyonlari[index]; // Seçilen index'i geri döndürdük
+            }
+            else // Eğer hamle sırası futbolcudaysa bu block çalışacak
+            {
+                int index = random.Next(futbolcuPozisyonlari.Count);// Random.Next methodu ile listeden 0 ile listenin uzunluğu arasında(Count) rastgele bir index seçildi
+                return futbolcuPozisyonlari[index];// Seçilen index'i geri döndürdük
+            }
+        }
+        
+        public void turuKazanan(Oyuncu kazanan) // Turu kazanan oyuncunun skorunu set eden method
         {
             // Eğer kazanan kullanıcıysa, kullanıcının skorunu setter ile set ediyoruz
             if (kazanan is Kullanici)
@@ -163,5 +156,7 @@ namespace KartOyunu.Entites
             else // Eğer kazanan bilgisayarsa, bilgisayarın skorunu setter ile set ediyoruz
                 _bilgisayar.setSkor(10);
         }
+        // Secici methodları end ----------->
+        // --- Set Edici Methodlar End ---------------------------------------------------------------------------------- 
     }
 }

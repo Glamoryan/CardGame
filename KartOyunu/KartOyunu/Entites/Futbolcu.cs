@@ -1,22 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KartOyunu.Entites
 {
-    // Sporcu Class'ından inheritance almış Futbolcu class'ı
-    public class Futbolcu : Sporcu
+    public class Futbolcu : Sporcu // Sporcu Class'ından inheritance almış Futbolcu class'ı
     {
+        // --- Fields Start ----------------------------------
         private int penalti;
         private int serbestVurus;
         private int kaleciKarsiKarsiya;
-
         private bool kartKullanilmisMi;
-
-        // Parametresiz constructor
-        public Futbolcu()
+        // --- Fields End ----------------------------------
+        
+        public Futbolcu()// Parametresiz constructor
         {
 
         }
@@ -71,11 +66,7 @@ namespace KartOyunu.Entites
         {
             return kartKullanilmisMi;
         }
-
-        /// <summary>
-        /// Sporcu class'ından Override edilmiş method
-        /// </summary>
-        /// <returns>Futbolcu puanını döndürür</returns>
+       
         public override int sporcuPuaniGoster()
         {
             throw new NotImplementedException();

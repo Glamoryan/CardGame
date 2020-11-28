@@ -1,12 +1,11 @@
 ﻿using System;
 
 namespace KartOyunu.Entites
-{
-    // Oyuncu class'ından inheritance alan Bilgisayar class'ı
-    public class Bilgisayar : Oyuncu
-    {
-        // Parametresiz contructor
-        public Bilgisayar()
+{    
+    public class Bilgisayar : Oyuncu // Oyuncu class'ından inheritance alan Bilgisayar class'ı
+    {        
+        // --- Constructors Start -------------------------------
+        public Bilgisayar()// Parametresiz contructor
         {
 
         }
@@ -16,13 +15,10 @@ namespace KartOyunu.Entites
         {
 
         }
+        // --- Constructors End -------------------------------
 
-        /// <summary>
-        /// Bilgisayar için random kart seçip oynama methodu
-        /// </summary>
-        /// <param name="sporcu">Hamle sırası Basketbolcu damı yoksa Futbolcuda mı</param>
-        /// <returns></returns>
-        public override Sporcu kartSec(Sporcu sporcuSirasi)
+        
+        public override Sporcu kartSec(Sporcu sporcuSirasi) // Bilgisayarın rastgele kartını seçip geri döndüren method
         {            
             var random = new Random();// Rastgele seçim için random class'ından instance oluşturduk
             int index = random.Next(kartListesi.Count); // 0 ile kartListesi uzunluğu arasında bir index seçtik
@@ -71,10 +67,9 @@ namespace KartOyunu.Entites
             }
         }
 
-        public override int SkorGoster()
-        {
-            // Oyuncu class'ımızdaki getSkor() methodu
-            return getSkor();
+        public override int SkorGoster() // Bilgisayar skorunu geri döndüren method
+        {            
+            return getSkor();// Oyuncu class'ımızdaki getSkor() methodunu çağırıyoruz
         }
     }
 }

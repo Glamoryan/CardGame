@@ -88,7 +88,6 @@
       <DependentUpon>futbolcuKart.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\IKartBase.cs" />
-    <Compile Include="UserControls\Utilities\OyuncuBilgileri.cs" />
     <Compile Include="UserControls\Utilities\PanelHelper.cs" />
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>

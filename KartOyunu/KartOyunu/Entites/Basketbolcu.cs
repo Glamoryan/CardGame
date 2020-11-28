@@ -1,18 +1,17 @@
 ﻿using System;
 
 namespace KartOyunu.Entites
-{
-    // Sporcu Class'ından inheritance almış Basketbolcu class'ı
-    public class Basketbolcu : Sporcu
+{    
+    public class Basketbolcu : Sporcu // Sporcu Class'ından inheritance almış Basketbolcu class'ı
     {
+        // --- Fields Start ------------------------------------------
         private int ikilik;
         private int ucluk;
         private int serbestAtis;
-
         private bool kartKullanilmisMi;
-
-        // Parametresiz constructor
-        public Basketbolcu()
+        // --- Fields End --------------------------------------------
+        
+        public Basketbolcu()// Parametresiz constructor
         {
 
         }
@@ -20,6 +19,7 @@ namespace KartOyunu.Entites
         // Parametreli constructor
         public Basketbolcu(string basketbolcuAdi,string basketbolcuTakim,int ikilik,int ucluk,int serbestAtis): base (basketbolcuAdi,basketbolcuTakim) // Java'daki super() methodunun karşılığı base
         {
+            // Setter'larımızı çağırıp özelliklerimizi set ediyoruz
             setIkilik(ikilik);
             setUcluk(ucluk);
             setSerbestAtis(serbestAtis);
@@ -66,11 +66,7 @@ namespace KartOyunu.Entites
         {
             return kartKullanilmisMi;
         }
-
-        /// <summary>
-        /// Sporcu class'ından Override edilmiş method
-        /// </summary>
-        /// <returns>Basketbolcu puanını döndürür</returns>
+        
         public override int sporcuPuaniGoster()
         {
             throw new NotImplementedException();

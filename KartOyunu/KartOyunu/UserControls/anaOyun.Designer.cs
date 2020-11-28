@@ -43,6 +43,7 @@
             this.lblTurBaslik = new System.Windows.Forms.Label();
             this.lblTur = new System.Windows.Forms.Label();
             this.btnGec = new System.Windows.Forms.Button();
+            this.lblBilgi = new System.Windows.Forms.Label();
             this.grbHamle.SuspendLayout();
             this.grbKullaniciKartlari.SuspendLayout();
             this.SuspendLayout();
@@ -196,10 +197,20 @@
             this.btnGec.Visible = false;
             this.btnGec.Click += new System.EventHandler(this.btnGec_Click);
             // 
+            // lblBilgi
+            // 
+            this.lblBilgi.AutoSize = true;
+            this.lblBilgi.Location = new System.Drawing.Point(629, 234);
+            this.lblBilgi.Name = "lblBilgi";
+            this.lblBilgi.Size = new System.Drawing.Size(117, 13);
+            this.lblBilgi.TabIndex = 6;
+            this.lblBilgi.Text = "(Eğer tek kart kalmışsa)";
+            // 
             // anaOyun
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.lblBilgi);
             this.Controls.Add(this.btnGec);
             this.Controls.Add(this.lblOzellik);
             this.Controls.Add(this.lblTurBaslik);
@@ -239,5 +250,6 @@
         private System.Windows.Forms.Label lblTurBaslik;
         private System.Windows.Forms.Label lblTur;
         private System.Windows.Forms.Button btnGec;
+        private System.Windows.Forms.Label lblBilgi;
     }
 }
