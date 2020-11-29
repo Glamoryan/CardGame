@@ -77,6 +77,7 @@
             this.btnKullaniciSkor.Name = "btnKullaniciSkor";
             this.btnKullaniciSkor.Size = new System.Drawing.Size(87, 82);
             this.btnKullaniciSkor.TabIndex = 1;
+            this.btnKullaniciSkor.TabStop = false;
             this.btnKullaniciSkor.Text = "-";
             this.btnKullaniciSkor.UseVisualStyleBackColor = true;
             // 
@@ -87,6 +88,7 @@
             this.btnBilgisayarSkor.Name = "btnBilgisayarSkor";
             this.btnBilgisayarSkor.Size = new System.Drawing.Size(87, 82);
             this.btnBilgisayarSkor.TabIndex = 1;
+            this.btnBilgisayarSkor.TabStop = false;
             this.btnBilgisayarSkor.Text = "-";
             this.btnBilgisayarSkor.UseVisualStyleBackColor = true;
             // 
