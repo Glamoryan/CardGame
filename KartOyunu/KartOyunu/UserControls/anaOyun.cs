@@ -14,6 +14,9 @@ namespace KartOyunu.UserControls
         public int turSayisi = 1; // Tur sayısını tutacak değişken
         public int berabereSayisi = 0; // Beraberlik sayısını tutan değişken
 
+        public Oyuncu kullanici; // Kullanıcı bilgilerimizi tutan değişken
+        public Oyuncu bilgisayar; // Bilgisayar bilgilerimizi tutan değişken
+
         public Sporcu _bilgisayarOynananSporcu; // O anki turda bilgisayarın oynadığı sporcuyu tutacak değişken 
         public Sporcu _kullaniciOynananSporcu; // O anki turda kullanıcının oynadığı sporcuyu tutacak değişken
 
@@ -36,6 +39,22 @@ namespace KartOyunu.UserControls
             pnlKartlarim.VerticalScroll.Visible = false;
             pnlKartlarim.VerticalScroll.Minimum = 0;            
             pnlKartlarim.AutoScroll = true;
+        }
+
+        public anaOyun(Oyuncu kullanici,Oyuncu bilgisayar)
+        {
+            InitializeComponent(); // Visual Studio kodu form elemanlarını oluşturur
+
+            // Kartların hepsini görebilmek için kartların gösterildiği panele (pnlKartlarim) yatay scrollbar ekliyoruz
+            pnlKartlarim.AutoScroll = false;
+            pnlKartlarim.VerticalScroll.Enabled = false;
+            pnlKartlarim.VerticalScroll.Visible = false;
+            pnlKartlarim.VerticalScroll.Minimum = 0;
+            pnlKartlarim.AutoScroll = true;
+
+            // Contructor'da verilen oyuncuları property'lerimize set ediyoruz
+            this.kullanici = kullanici;
+            this.bilgisayar = bilgisayar;
         }
         // --- Constructors End ---
 
@@ -479,8 +498,11 @@ namespace KartOyunu.UserControls
 
         // --- Eventler (Olaylar) Start -------------------------------------------------------------------------------------------------------------------------------------        
         private void anaOyun_Load(object sender, EventArgs e)// Anaoyun controlümüz yüklendiğinde çalışacak event
-        {            
-            test = new Test();// Test Class'ımızın instance'ını alıyoruz
+        {
+            if (kullanici == null || bilgisayar == null) // Eğer kullanıcı veya bilgisayar oyuncularının bilgileri verilmemişse bu block çalışır
+                test = new Test();// Test Class'ımızın instance'ını alıyoruz         
+            else // Eğer kullanıcı veya bilgisayar oyuncularının bilgileri verilmişse bu block çalışır
+                test = new Test(kullanici, bilgisayar); ;// Test Class'ımızın instance'ını oyuncuları göndererek alıyoruz  
 
             InitGame(); // Yeni tur için oyunu set eden methodu çağırıyoruz         
 
