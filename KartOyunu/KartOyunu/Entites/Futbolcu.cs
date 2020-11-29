@@ -13,7 +13,7 @@ namespace KartOyunu.Entites
         
         public Futbolcu()// Parametresiz constructor
         {
-
+            // Boş instance
         }
 
         // Parametreli constructor

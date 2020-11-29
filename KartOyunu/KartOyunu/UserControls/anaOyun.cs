@@ -202,7 +202,7 @@ namespace KartOyunu.UserControls
             if (suankiTur == "Basketbolcu") // Şuanki tur basketbolcuysa bu block çalışır
             {
                 // Bilgisayarın kartSec fonksiyonuna şuanki tur basketbolcu olduğu için basketbolcu instance'ı gönderip çalıştırıyoruz. Dönen sonucu oynanacak sporcuya atıyoruz
-                _bilgisayarOynananSporcu = (Basketbolcu)test._bilgisayar.kartSec(new Basketbolcu());
+                _bilgisayarOynananSporcu = (Basketbolcu)test._bilgisayar.kartSec(new Basketbolcu()/*Parametresi sporcu contructor'ını kullanmak için boş instance gönderiyoruz */);
                 basketbolcuKart oynanacakKart = new basketbolcuKart((Basketbolcu)_bilgisayarOynananSporcu); // Tur sırası basketbolcu olduğu için basketbolcuKartı instance'ı oluşturup oynanacakSporcuyu contructor'ını veriyoruz
                 PanelHelper.panelTemizle(pnlBilgisayarKart); // Bilgisayar'ın kartı koyduğu paneli temizliyoruz
                 pnlBilgisayarKart.Controls.Add(oynanacakKart); // Oluşturduğumuz kartı Bilgisayar'ın kart koyduğu panele ekliyoruz
@@ -215,7 +215,7 @@ namespace KartOyunu.UserControls
             else // Şuanki tur futbolcuysa block çalışır
             {
                 // Bilgisayarın kartSec fonksiyonuna şuanki tur futbolcu olduğu için futbolcu instance'ı gönderip çalıştırıyoruz. Dönen sonucu oynanacak sporcuya atıyoruz
-                _bilgisayarOynananSporcu = (Futbolcu)test._bilgisayar.kartSec(new Futbolcu());
+                _bilgisayarOynananSporcu = (Futbolcu)test._bilgisayar.kartSec(new Futbolcu()/*Parametresi sporcu contructor'ını kullanmak için boş instance gönderiyoruz */);
                 futbolcuKart oynanacakKart = new futbolcuKart((Futbolcu)_bilgisayarOynananSporcu);// Tur sırası futbolcu olduğu için futbolcuKartı instance'ı oluşturup oynanacakSporcuyu contructor'ını veriyoruz
                 PanelHelper.panelTemizle(pnlBilgisayarKart);// Bilgisayar'ın kartı koyduğu paneli temizliyoruz
                 pnlBilgisayarKart.Controls.Add(oynanacakKart);// Oluşturduğumuz kartı Bilgisayar'ın kart koyduğu panele ekliyoruz
