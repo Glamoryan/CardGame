@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace KartOyunu.Entites
-{    
+{
     public class Bilgisayar : Oyuncu // Oyuncu class'ından inheritance alan Bilgisayar class'ı
     {        
         // --- Constructors Start -------------------------------

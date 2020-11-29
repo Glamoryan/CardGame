@@ -8,7 +8,7 @@ namespace KartOyunu.UserControls
     public partial class anaMenu : UserControl // Sadece anamenüyü içeren UserControl
     {
         // --- Fieds Start ---------------------
-        public anaOyun _anaOyun; // AnaOyun instance'ımızı tutan değişken
+        private anaOyun _anaOyun; // AnaOyun instance'ımızı tutan değişken
         private Panel anaPanel; // AnaPanel panelimizi tutan değişken
 
         Kullanici kullanicimiz;

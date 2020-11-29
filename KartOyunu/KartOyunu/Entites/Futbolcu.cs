@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace KartOyunu.Entites
+﻿namespace KartOyunu.Entites
 {
     public class Futbolcu : Sporcu // Sporcu Class'ından inheritance almış Futbolcu class'ı
     {

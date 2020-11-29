@@ -9,21 +9,21 @@ namespace KartOyunu.UserControls
     public partial class anaOyun : UserControl
     {
         // --- Fields Start ---
-        public Test test; // Test class'ımızın instance'ını tutacak değişken
-        public string suankiTur = "Futbolcu"; // Tur durumunu tutacak değişken (İstenilen turda başlanabilir => Futbolcu veya Basketbolcu)
-        public int turSayisi = 1; // Tur sayısını tutacak değişken
-        public int berabereSayisi = 0; // Beraberlik sayısını tutan değişken
+        private Test test; // Test class'ımızın instance'ını tutacak değişken
+        private string suankiTur = "Futbolcu"; // Tur durumunu tutacak değişken (İstenilen turda başlanabilir => Futbolcu veya Basketbolcu)
+        private int turSayisi = 1; // Tur sayısını tutacak değişken
+        private int berabereSayisi = 0; // Beraberlik sayısını tutan değişken
 
-        public Oyuncu kullanici; // Kullanıcı bilgilerimizi tutan değişken
-        public Oyuncu bilgisayar; // Bilgisayar bilgilerimizi tutan değişken
+        private Oyuncu kullanici; // Kullanıcı bilgilerimizi tutan değişken
+        private Oyuncu bilgisayar; // Bilgisayar bilgilerimizi tutan değişken
 
-        public Sporcu _bilgisayarOynananSporcu; // O anki turda bilgisayarın oynadığı sporcuyu tutacak değişken 
-        public Sporcu _kullaniciOynananSporcu; // O anki turda kullanıcının oynadığı sporcuyu tutacak değişken
+        private Sporcu _bilgisayarOynananSporcu; // O anki turda bilgisayarın oynadığı sporcuyu tutacak değişken 
+        private Sporcu _kullaniciOynananSporcu; // O anki turda kullanıcının oynadığı sporcuyu tutacak değişken
 
-        public IKartBase _kullaniciOynananKart; // O anki turda kullanıcının oynadığı kartı tutacak değişken
-        public IKartBase _bilgisayarOynananKart; // O anki turda bilgisayarın oynadığı kartı tutacak değişken        
+        private IKartBase _kullaniciOynananKart; // O anki turda kullanıcının oynadığı kartı tutacak değişken
+        private IKartBase _bilgisayarOynananKart; // O anki turda bilgisayarın oynadığı kartı tutacak değişken        
 
-        public Oyuncu kazanan; // O turu kazanan oyuncuyu tutacak değişken
+        private Oyuncu kazanan; // O turu kazanan oyuncuyu tutacak değişken
         // --- Fields End ---
 
 

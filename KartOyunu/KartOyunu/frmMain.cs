@@ -8,7 +8,7 @@ namespace KartOyunu
     // Oyunun çalışacağı Main Formu
     public partial class frmMain : Form
     {
-        public anaMenu _mainmenuControl;        
+        private anaMenu _mainmenuControl;        
 
         public frmMain()
         {
