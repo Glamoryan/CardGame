@@ -72,7 +72,6 @@
             // 
             // btnKullaniciSkor
             // 
-            this.btnKullaniciSkor.Enabled = false;
             this.btnKullaniciSkor.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.btnKullaniciSkor.Location = new System.Drawing.Point(24, 60);
             this.btnKullaniciSkor.Name = "btnKullaniciSkor";
@@ -83,7 +82,6 @@
             // 
             // btnBilgisayarSkor
             // 
-            this.btnBilgisayarSkor.Enabled = false;
             this.btnBilgisayarSkor.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.btnBilgisayarSkor.Location = new System.Drawing.Point(653, 60);
             this.btnBilgisayarSkor.Name = "btnBilgisayarSkor";

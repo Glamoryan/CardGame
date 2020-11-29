@@ -86,17 +86,17 @@ namespace KartOyunu.UserControls
             {
                 test.turuKazanan(kazanan as Kullanici); // Test class'ımızdaki turuKazanan() methodu ile kullanıcıyı gönderip, skorunu arttırıyoruz      
                 skorlariYazdir(); // Skorları ekrana yazdırıp güncelleyen methodu çağırıyoruz
-                MessageBox.Show(test._kullanici.getOyuncuAdi() + " turu kazandı !"); // Kazananın adını getter ile alıp ekrana çıkartıyoruz                   
+                MessageBox.Show(test._kullanici.getOyuncuAdi() + " turu kazandı! +10 puan","Kullanıcı Turu Kazandı",MessageBoxButtons.OK,MessageBoxIcon.Information); // Kazananın adını getter ile alıp ekrana çıkartıyoruz                   
             }
             else if (kazanan is Bilgisayar) // Eğer bize verilen kazanan bilgisayarsa bu block çalışır
             {
                 test.turuKazanan(kazanan as Bilgisayar); // Test class'ımızdaki turuKazanan() methodu ile bilgisayarı gönderip, skorunu arttırıyoruz
                 skorlariYazdir(); // Skorları ekrana yazdırıp güncelleyen methodu çağırıyoruz
-                MessageBox.Show(test._bilgisayar.getOyuncuAdi() + " turu kazandı !"); // Kazananın adını getter ile alıp ekrana çıkartıyoruz                                
+                MessageBox.Show(test._bilgisayar.getOyuncuAdi() + " turu kazandı! +10 puan","Bilgisayar Turu Kazandı",MessageBoxButtons.OK,MessageBoxIcon.Information); // Kazananın adını getter ile alıp ekrana çıkartıyoruz                                
             }
             else // Eğer kazananımız koysa bu block çalışır (kazananiBelirle() methodunda özellikleri aynı olup null döndürdüğümüz zaman)
             {
-                MessageBox.Show("Berabere"); // Ekrana berabere yazdırıyoruz    
+                MessageBox.Show("Berabere, kartlar geri alındı","Tur Berabere Bitti",MessageBoxButtons.OK,MessageBoxIcon.Information); // Ekrana berabere yazdırıyoruz    
                 btnGec.Visible = true; // Berabere biten turdan sonra tek kart kaldıysa o turu geçmek için "Geç" butonunu görünür yapıyoruz
                 lblBilgi.Visible = true; // Bilgi label'ının görünürlüğünü aktifleştiriyoruz
 
@@ -462,12 +462,12 @@ namespace KartOyunu.UserControls
                 Oyuncu oyunuKazanan = test.oyunuBitir(); // Test class'ındaki oyunu bitir methodundan dönen oyuncuyu değişkene aktarıyoruz
                 if (oyunuKazanan != null) // Eğer kazanan oyuncu boş değilse bu block çalışır
                 {                    
-                    MessageBox.Show(oyunuKazanan.getOyuncuAdi() + " oyuncusu oyunu " + oyunuKazanan.getSkor() + " skoru ile bitirdi");// Ekrana oyuncunun adını ve skorunu yazdırırız
+                    MessageBox.Show("Kazanan "+oyunuKazanan.getOyuncuAdi() + " oyuncusu. Oyunu " + oyunuKazanan.getSkor() + " skor ile bitirdi","Oyun Bitti",MessageBoxButtons.OK,MessageBoxIcon.Information);// Ekrana oyuncunun adını ve skorunu yazdırırız
                     return true; // Geriye true döndürürüz, yani oyun bitti
                 }
                 else // Eğer kazanan oyuncu boş dönmüşse bu block çalışır (Berabere bittiyse)
                 {
-                    MessageBox.Show("Oyun berabere bitti"); // Ekrana oyun berabere bitti yazdırırız
+                    MessageBox.Show("Skorlar eşit, kazanan yok","Oyun berabere bitti",MessageBoxButtons.OK,MessageBoxIcon.Warning); // Ekrana oyun berabere bitti yazdırırız
                     return true; // Geriye true döndürürüz, yani oyun bitti
                 }
             }
@@ -519,11 +519,11 @@ namespace KartOyunu.UserControls
             Oyuncu oyunuKazanan = test.oyunuBitir(); // Test class'ımızdaki oyunuBitir() methodunu çağırıp kazananı değişkene atarız
             if (oyunuKazanan != null) // Eğer kazanan boş gelmemişse bu block çalışır
             {
-                MessageBox.Show(oyunuKazanan.getOyuncuAdi() + " oyuncusu oyunu " + oyunuKazanan.getSkor() + " skoru ile bitirdi");// Kazananı skor ve adı ile birlikte ekrana yazarız                
+                MessageBox.Show("Kazanan "+oyunuKazanan.getOyuncuAdi() + " oyuncusu. Oyunu " + oyunuKazanan.getSkor() + " skor ile bitirdi","Oyun Bitti",MessageBoxButtons.OK,MessageBoxIcon.Information);// Kazananı skor ve adı ile birlikte ekrana yazarız                
             }
             else // Eğer kazanan boş dönmüşse (Berabere bitmişse) bu block çalışır
             {
-                MessageBox.Show("Oyun berabere bitti"); // Ekrana oyun berabere bitti yazdırırız                 
+                MessageBox.Show("Skorlar eşit, kazanan yok","Oyun berabere bitti",MessageBoxButtons.OK,MessageBoxIcon.Warning); // Ekrana oyun berabere bitti yazdırırız                 
             }
             Dispose(); //AnaOyun controlünün içindeki tüm elemanları sileriz
             PanelHelper.panelTemizle(PanelHelper.mainPanel); // Ana formumuzda bulunan mainPanelin içini temizleriz
