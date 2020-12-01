@@ -111,8 +111,8 @@ namespace KartOyunu.UserControls
                     lblBilgi2.Visible = true; // Bilgi label'ımızın görünürlüğünü açarız
                 }
             }
-            bilgisayarKartiSil(); // Tur bittikten sonra bilgisayarın oynadığı kartı destesinden silmek için bu methodu çağırıyoruz
-            kullaniciKartiSil();            
+            bilgisayarKartiSil(); // Tur bittikten sonra bilgisayarın oynadığı kartı destesinden silmek için bu methodu çağırıyoruz (Kartın kullanilmisMi özelliğini kontrol edip siler)
+            kullaniciKartiSil(); // Tur bittikten sonra kullanıcının oynadığı kartı destesinden silmek için bu methodu çağırıyoruz (Kartın kullanilmisMi özelliğini kontrol edip siler)           
             sonrakiTuraGec(); // Sonraki tura geçmemizi sağlana methodu çağırıyoruz
         }
 
@@ -258,8 +258,13 @@ namespace KartOyunu.UserControls
                 koyulanKart.setKartKullanilmisMi(true); // Oynanılan kartın kartKullanilmisMi özelliğini setter ile true'ya set ediyoruz
             }
 
-            bilgisayarKartOyna(); // Kartımızı oynadıktan sonra, Bilgisayarda kartını oynasın diye bilgisayarKartOyna() methodunu çağırıyoruz            
-            
+            bilgisayarKartOyna(); // Kartımızı oynadıktan sonra, Bilgisayarda kartını oynasın diye bilgisayarKartOyna() methodunu çağırıyoruz    
+
+            ozellikDondur(); // Özellik döndür methodunu çağırıyoruz
+        }
+
+        public void ozellikDondur() // Tura göre özellik döndürüp seçen method
+        {
             switch (pozisyonSec())// Kartı oynadıktan sonra pozisyonSec() methodunu çağırıyoruz
             {
                 case "Penaltı": //pozisyonSec() methodundan dönen özellik penaltı ise bu block çalışır
@@ -503,7 +508,7 @@ namespace KartOyunu.UserControls
             if (kullanici == null || bilgisayar == null) // Eğer kullanıcı veya bilgisayar oyuncularının bilgileri verilmemişse bu block çalışır
                 test = new Test();// Test Class'ımızın instance'ını alıyoruz         
             else // Eğer kullanıcı veya bilgisayar oyuncularının bilgileri verilmişse bu block çalışır
-                test = new Test(kullanici, bilgisayar); ;// Test Class'ımızın instance'ını oyuncuları göndererek alıyoruz  
+                test = new Test(kullanici, bilgisayar);// Test Class'ımızın instance'ını oyuncuları göndererek alıyoruz  
 
             InitGame(); // Yeni tur için oyunu set eden methodu çağırıyoruz         
 
