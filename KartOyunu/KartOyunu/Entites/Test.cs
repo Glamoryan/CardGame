@@ -39,8 +39,8 @@ namespace KartOyunu.Entites
 
             // kartDagitici() 'dan gelen array'i oyuncuların kartListesine atıyoruz (kartDagitici()'dan dönen 0.index kullanıcıDestesi , 1.index bilgisayar destesi)
             List<Sporcu>[] deste16 = kartDagitici();
-            _kullanici.kartListesi = deste16[0];
-            _bilgisayar.kartListesi = deste16[1];
+            _kullanici.setKartListesi(deste16[0]);
+            _bilgisayar.setKartListesi(deste16[1]);
         }
 
         public Oyuncu oyunuBitir() // Oyunu bitirmemizi sağlayan method

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace KartOyunu.Entites
 {
@@ -21,18 +22,19 @@ namespace KartOyunu.Entites
         public override Sporcu kartSec(Sporcu sporcuSirasi) // Bilgisayarın rastgele kartını seçip geri döndüren method
         {            
             var random = new Random();// Rastgele seçim için random class'ından instance oluşturduk
-            int index = random.Next(kartListesi.Count); // 0 ile kartListesi uzunluğu arasında bir index seçtik
+            List<Sporcu> destemiz = getKartListesi(); // Destemizi getter ile çekip değişkene atıyoruz
+            int index = random.Next(destemiz.Count); // 0 ile kartListesi uzunluğu arasında bir index seçtik
 
             if (sporcuSirasi is Basketbolcu) // Eğer sporcu sırası basketbolcudaysa bu block çalışacak
             {                                                               
-                Sporcu secilenKart = kartListesi[index]; // Oluşturduğumuz rastgele indexten bir kart seçiyoruz (Basketbolcu yada Futbolcu)
+                Sporcu secilenKart = destemiz[index]; // Oluşturduğumuz rastgele indexten bir kart seçiyoruz (Basketbolcu yada Futbolcu)
                 if (secilenKart is Basketbolcu) // Eğer seçtiğimiz kart basketbolcuysa bu block çalışır
                 {                    
                     return secilenKart; // Seçtiğimiz kartı geri döndürürüz
                 }                
                 else // Eğer seçilen kart basketbolcu değilse bu block çalışır (Çünkü sporcu sırası basketbolcularda)
                 {
-                    foreach (Sporcu kart in kartListesi) // Kart listesini foreach ile geziyoruz
+                    foreach (Sporcu kart in destemiz) // Kart listesini foreach ile geziyoruz
                     {
                         if (kart is Basketbolcu) // Eğer gezdiğimiz kart basketbolcuysa bu block çalışır
                         {
@@ -47,12 +49,12 @@ namespace KartOyunu.Entites
             }
             else // Eğer sporcu sırası Futbolcudaysa bu block çalışır
             {
-                Sporcu secilenKart = kartListesi[index]; // Seçilen index ile kart seçiyoruz (Basketbolcu veya Futbolcu)
+                Sporcu secilenKart = destemiz[index]; // Seçilen index ile kart seçiyoruz (Basketbolcu veya Futbolcu)
                 if (secilenKart is Futbolcu)// Eğer seçilen kart futbolcuysa bu block çalışır
                     return secilenKart; // Seçilen kartı geri döndürüyoruz
                 else //Eğer seçilen kart basketbolcuysa bu block çalışır
                 {
-                    foreach (Sporcu kart in kartListesi) // Kartlistesini foreach ile geziyoruz
+                    foreach (Sporcu kart in destemiz) // Kartlistesini foreach ile geziyoruz
                     {
                         if (kart is Futbolcu) // Eğer gezdiğimiz kart futbolcuysa bu block çalışır
                         {

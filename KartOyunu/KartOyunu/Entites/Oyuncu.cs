@@ -8,8 +8,7 @@ namespace KartOyunu.Entites
         private int _oyuncuID;
         private string _oyuncuAdi;
         private int _skor;
-
-        public List<Sporcu> kartListesi { get; set; } // Kart listesini tutan property
+        private List<Sporcu> _kartListesi; // Kart listesini tutan property
 
         // --- Fields Start -----------------------        
         
@@ -42,6 +41,11 @@ namespace KartOyunu.Entites
             _skor += skor;
         }
 
+        public void setKartListesi(List<Sporcu> deste)
+        {
+            _kartListesi = deste;
+        }
+
         // Getter'larımız
         public int getId()
         {
@@ -56,6 +60,11 @@ namespace KartOyunu.Entites
         public int getSkor()
         {
             return _skor;
+        }
+
+        public List<Sporcu> getKartListesi()
+        {
+            return _kartListesi;
         }
 
         // Override edilecek abstract metodlarımız

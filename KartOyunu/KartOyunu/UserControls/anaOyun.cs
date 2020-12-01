@@ -1,6 +1,7 @@
 ﻿using KartOyunu.Entites;
 using KartOyunu.UserControls.Utilities;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -12,7 +13,7 @@ namespace KartOyunu.UserControls
         private Test test; // Test class'ımızın instance'ını tutacak değişken
         private string suankiTur = "Futbolcu"; // Tur durumunu tutacak değişken (İstenilen turda başlanabilir => Futbolcu veya Basketbolcu)
         private int turSayisi = 1; // Tur sayısını tutacak değişken
-        private int berabereSayisi = 0; // Beraberlik sayısını tutan değişken
+        private int berabereSayisi = 0; // Beraberlik sayısını tutan değişken        
 
         private Oyuncu kullanici; // Kullanıcı bilgilerimizi tutan değişken
         private Oyuncu bilgisayar; // Bilgisayar bilgilerimizi tutan değişken
@@ -166,7 +167,7 @@ namespace KartOyunu.UserControls
         {
             int sayac = 0; // Kartların yerlerini kontrol etmek için bir sayaç tanımlıyoruz
             PanelHelper.panelTemizle(pnlKartlarim); // Kartların geleceği paneli temizliyoruz
-            foreach (Sporcu kart in test._kullanici.kartListesi) // Test class'ında, Kullanıcı class'ımızı tutan property'deki kartListesini foreach ile geziyoruz. (Bilgisayar kartListesini gezmiyoruz çünkü ekranda göstermeyeceğiz)
+            foreach (Sporcu kart in test._kullanici.getKartListesi()) // Test class'ında, Kullanıcı class'ımızı tutan property'deki kartListesini foreach ile geziyoruz. (Bilgisayar kartListesini gezmiyoruz çünkü ekranda göstermeyeceğiz)
             {                
                 if (kart is Basketbolcu) // Eğer gezdiğimiz kartın tipi Basketbolcuysa bu block çalışır
                 {
@@ -326,13 +327,13 @@ namespace KartOyunu.UserControls
             {
                 Basketbolcu kullanilmisKart = _bilgisayarOynananSporcu as Basketbolcu; // Property'mizdeki sporcuyu, basketbolcu olarak tanıtıp değişkene atıyoruz
                 if (kullanilmisKart.getKartKullanilmisMi()) // Kartın kullanılmış olup olmadığını anlamak için getter ile kartKullanilmisMi özelliğini çağırıyoruz. Eğer kart kullanılmışsa bu block çalışır
-                    test._bilgisayar.kartListesi.Remove(kullanilmisKart); // Kullanılmış kartı bilgisayar destesinden siliyoruz
+                    test._bilgisayar.getKartListesi().Remove(kullanilmisKart); // Kullanılmış kartı bilgisayar destesinden siliyoruz
             }
             else // Eğer oynanan sporcu futbolcuysa bu block çalışır
             {
                 Futbolcu kullanilmisKart = _bilgisayarOynananSporcu as Futbolcu;  // Property'mizdeki sporcuyu, futbolcu olarak tanıtıp değişkene atıyoruz
                 if (kullanilmisKart.getKartKullanilmisMi()) // Kartın kullanılmış olup olmadığını anlamak için getter ile kartKullanilmisMi özelliğini çağırıyoruz. Eğer kart kullanılmışsa bu block çalışır
-                    test._bilgisayar.kartListesi.Remove(kullanilmisKart); // Kullanılmış kartı bilgisayar destesinden siliyoruz
+                    test._bilgisayar.getKartListesi().Remove(kullanilmisKart); // Kullanılmış kartı bilgisayar destesinden siliyoruz
             }
         }
 
@@ -342,13 +343,13 @@ namespace KartOyunu.UserControls
             {
                 Basketbolcu kullanilmisKart = _kullaniciOynananSporcu as Basketbolcu;  // Property'mizdeki sporcuyu, basketbolcu olarak tanıtıp değişkene atıyoruz
                 if (kullanilmisKart.getKartKullanilmisMi()) // Kartın kullanılmış olup olmadığını anlamak için getter ile kartKullanilmisMi özelliğini çağırıyoruz. Eğer kart kullanılmışsa bu block çalışır
-                    test._kullanici.kartListesi.Remove(kullanilmisKart); // Kullanılmış kartı kullanıcı destesinden siliyoruz
+                    test._kullanici.getKartListesi().Remove(kullanilmisKart); // Kullanılmış kartı kullanıcı destesinden siliyoruz
             }
             else // Eğer oynanan sporcu futbolcuysa bu block çalışır
             {
                 Futbolcu kullanilmisKart = _kullaniciOynananSporcu as Futbolcu; // Property'mizdeki sporcuyu, futbolcu olarak tanıtıp değişkene atıyoruz
                 if (kullanilmisKart.getKartKullanilmisMi()) // Kartın kullanılmış olup olmadığını anlamak için getter ile kartKullanilmisMi özelliğini çağırıyoruz. Eğer kart kullanılmışsa bu block çalışır
-                    test._kullanici.kartListesi.Remove(kullanilmisKart); // Kullanılmış kartı kullanıcı destesinden siliyoruz
+                    test._kullanici.getKartListesi().Remove(kullanilmisKart); // Kullanılmış kartı kullanıcı destesinden siliyoruz
             }
         }
         
@@ -457,7 +458,7 @@ namespace KartOyunu.UserControls
 
         public bool oyunBittiMi() // Oyunun bitip bitmediğini kontrol eden method
         {
-            if (test._kullanici.kartListesi.Count == 0 && test._bilgisayar.kartListesi.Count == 0) // Eğer iki oyuncunun elindede kart kalmadıysa bu block çalışır
+            if (test._kullanici.getKartListesi().Count == 0 && test._bilgisayar.getKartListesi().Count == 0) // Eğer iki oyuncunun elindede kart kalmadıysa bu block çalışır
             {
                 Oyuncu oyunuKazanan = test.oyunuBitir(); // Test class'ındaki oyunu bitir methodundan dönen oyuncuyu değişkene aktarıyoruz
                 if (oyunuKazanan != null) // Eğer kazanan oyuncu boş değilse bu block çalışır
