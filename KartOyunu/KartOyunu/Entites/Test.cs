@@ -71,7 +71,7 @@ namespace KartOyunu.Entites
             sporcular.Add(new Futbolcu("Gareth Bale", "Tottenham", 90, 85, 90, false));
 
             // Basketbolcu isimleri ve takımları constructor ile tanımlandı - Özellikleri ise settar'ları ile tanımlandı
-            sporcular.Add(new Basketbolcu("Lebron James", "Lakers", 85, 80, 95, false));
+            sporcular.Add(new Basketbolcu("Lebron James", "Lakers", 89, 90, 95, false));
             sporcular.Add(new Basketbolcu("Stephen Curry", "Goldent State", 85, 95, 90, false));
             sporcular.Add(new Basketbolcu("James Harden", "Houston Rockets", 85, 75, 85, false));
             sporcular.Add(new Basketbolcu("Kawhi Leonard", "Lakers", 85, 85, 85, false));

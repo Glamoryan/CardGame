@@ -1,6 +1,9 @@
 C:\Users\Xsabr\Desktop\Work-Flow\Bionluk\KartOyunu- ozgsntrk\KartOyunu\KartOyunu\bin\Debug\KartOyunu.exe.config
+C:\Users\Xsabr\Desktop\Work-Flow\Bionluk\KartOyunu- ozgsntrk\KartOyunu\KartOyunu\bin\Debug\KartOyunu.exe.manifest
+C:\Users\Xsabr\Desktop\Work-Flow\Bionluk\KartOyunu- ozgsntrk\KartOyunu\KartOyunu\bin\Debug\KartOyunu.application
 C:\Users\Xsabr\Desktop\Work-Flow\Bionluk\KartOyunu- ozgsntrk\KartOyunu\KartOyunu\bin\Debug\KartOyunu.exe
 C:\Users\Xsabr\Desktop\Work-Flow\Bionluk\KartOyunu- ozgsntrk\KartOyunu\KartOyunu\bin\Debug\KartOyunu.pdb
+C:\Users\Xsabr\Desktop\Work-Flow\Bionluk\KartOyunu- ozgsntrk\KartOyunu\KartOyunu\obj\Debug\KartOyunu.csprojAssemblyReference.cache
 C:\Users\Xsabr\Desktop\Work-Flow\Bionluk\KartOyunu- ozgsntrk\KartOyunu\KartOyunu\obj\Debug\KartOyunu.frmMain.resources
 C:\Users\Xsabr\Desktop\Work-Flow\Bionluk\KartOyunu- ozgsntrk\KartOyunu\KartOyunu\obj\Debug\KartOyunu.Properties.Resources.resources
 C:\Users\Xsabr\Desktop\Work-Flow\Bionluk\KartOyunu- ozgsntrk\KartOyunu\KartOyunu\obj\Debug\KartOyunu.UserControls.anaMenu.resources
@@ -9,6 +12,7 @@ C:\Users\Xsabr\Desktop\Work-Flow\Bionluk\KartOyunu- ozgsntrk\KartOyunu\KartOyunu
 C:\Users\Xsabr\Desktop\Work-Flow\Bionluk\KartOyunu- ozgsntrk\KartOyunu\KartOyunu\obj\Debug\KartOyunu.UserControls.futbolcuKart.resources
 C:\Users\Xsabr\Desktop\Work-Flow\Bionluk\KartOyunu- ozgsntrk\KartOyunu\KartOyunu\obj\Debug\KartOyunu.csproj.GenerateResource.cache
 C:\Users\Xsabr\Desktop\Work-Flow\Bionluk\KartOyunu- ozgsntrk\KartOyunu\KartOyunu\obj\Debug\KartOyunu.csproj.CoreCompileInputs.cache
+C:\Users\Xsabr\Desktop\Work-Flow\Bionluk\KartOyunu- ozgsntrk\KartOyunu\KartOyunu\obj\Debug\KartOyunu.exe.manifest
+C:\Users\Xsabr\Desktop\Work-Flow\Bionluk\KartOyunu- ozgsntrk\KartOyunu\KartOyunu\obj\Debug\KartOyunu.application
 C:\Users\Xsabr\Desktop\Work-Flow\Bionluk\KartOyunu- ozgsntrk\KartOyunu\KartOyunu\obj\Debug\KartOyunu.exe
 C:\Users\Xsabr\Desktop\Work-Flow\Bionluk\KartOyunu- ozgsntrk\KartOyunu\KartOyunu\obj\Debug\KartOyunu.pdb
-C:\Users\Xsabr\Desktop\Work-Flow\Bionluk\KartOyunu- ozgsntrk\KartOyunu\KartOyunu\obj\Debug\KartOyunu.csprojAssemblyReference.cache
